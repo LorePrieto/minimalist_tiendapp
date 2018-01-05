@@ -3,7 +3,9 @@ import { Link, Route } from 'react-router-dom';
 
 const Main = () => {
 return(
-  <p>Yo soy yo, don Navbar</p>
+  <div id="navbar">
+    <p style={{color: 'red'}}>Pepe</p>
+  </div>
   )
 }
 
