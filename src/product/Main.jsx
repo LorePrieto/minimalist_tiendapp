@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
-import Cart from './../landing/cart/Main.jsx';
+import Cart from './../shared/cart/Main.jsx';
 import Content from './content/Main.jsx';
-import Navbar from './../landing/navbar/Main.jsx';
+import Navbar from './../shared/navbar/Main.jsx';
 
 const Main = ({match}) => {
 return(

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect, Link, Route,Switch } from 'react-router-dom';
-import Main from './landing/Main';
-import Checkout from './checkout/Main';
-import Product from './product/Main';
+import Main from './landing/Main.jsx';
+import Checkout from './checkout/Main.jsx';
+import Product from './product/Main.jsx';
+import Catalog from './catalog/Main.jsx';
 
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
         <Route exact path="/" component={Main}/>
         <Route exact path="/checkout" component={Checkout}/>
         <Route exact path="/product" component={Product}/>
+        <Route exact path="/catalog" component={Catalog}/>
        </Switch>
       </div>
     );
