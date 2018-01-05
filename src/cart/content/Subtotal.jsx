@@ -3,8 +3,8 @@ import { Link, Route } from 'react-router-dom';
 
 const Subtotal = () => {
 return(
-  <div id="subtotal-cart">
-    <p>Shared Cart Subtotal</p>
+  <div id="subtotal-content-cart">
+    <p>Cart Subtotal</p>
   </div>
   )
 }

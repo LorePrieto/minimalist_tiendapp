@@ -3,8 +3,8 @@ import { Link, Route } from 'react-router-dom';
 
 const Products = () => {
 return(
-  <div id="products-cart">
-    <p>Shared Cart Products</p>
+  <div id="header-cart">
+    <p>Shared Cart Header</p>
   </div>
   )
 }

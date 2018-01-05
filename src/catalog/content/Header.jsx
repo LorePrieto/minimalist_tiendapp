@@ -3,8 +3,8 @@ import { Link, Route } from 'react-router-dom';
 
 const Header = () => {
 return(
-  <div id="header-content-landing">
-    <p>Landing Header</p>
+  <div id="header-content-catalog">
+    <p>Catalog Header</p>
   </div>
   )
 }

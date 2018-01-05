@@ -6,7 +6,7 @@ import Navbar from './../shared/navbar/Main.jsx';
 
 const Main = ({match}) => {
 return(
-  <div>
+  <div id="product">
     <Route path={`${match.path}`} component={Navbar}/>
     <Route path={`${match.path}`} component={Content}/>
     <Route path={`${match.path}`} component={Cart}/>

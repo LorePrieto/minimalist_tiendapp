@@ -3,8 +3,8 @@ import { Link, Route } from 'react-router-dom';
 
 const About = () => {
 return(
-  <div id="about-footer-content">
-    <p>Yo soy yo, don About</p>
+  <div id="about-footer">
+    <p>Shared Footer About</p>
   </div>
   )
 }

@@ -1,9 +1,20 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Redirect, Link, Route, Switch } from 'react-router-dom';
+import Cart from './cart/Main.jsx';
+import CustomerInformation from './customer_information/Main.jsx';
+import PaymentMethod from './payment_method/Main.jsx';
+import ShippingMethod from './shipping_method/Main.jsx';
 
-const Main = () => {
+const Main = ({match}) => {
 return(
-  <p>World!</p>
+  <div id="checkout">
+    <Switch>
+      <Route exact path={`${match.path}`} component={CustomerInformation}/>
+      <Route exact path={`${match.path}/payment_method`} component={PaymentMethod}/>
+      <Route exact path={`${match.path}/shipping_method`} component={ShippingMethod}/>
+    </Switch>
+    <Route component={Cart}/>
+  </div>
   )
 }
 

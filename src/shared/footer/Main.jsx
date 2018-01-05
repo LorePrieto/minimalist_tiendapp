@@ -5,7 +5,7 @@ import Social from './Social.jsx';
 
 const Main = ({match}) => {
 return(
-  <div id="footer-content">
+  <div id="footer">
     <Route path={`${match.path}`} component={About}/>
     <Route path={`${match.path}`} component={Social}/>
   </div>

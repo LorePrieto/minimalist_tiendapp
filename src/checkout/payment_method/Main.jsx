@@ -3,8 +3,8 @@ import { Link, Route } from 'react-router-dom';
 
 const Main = () => {
 return(
-  <div id="navbar">
-    <p style={{color: 'red'}}>Shared Navbar</p>
+  <div id="payment-method-checkout">
+    <p>PaymentMethod</p>
   </div>
   )
 }

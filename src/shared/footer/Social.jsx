@@ -3,8 +3,8 @@ import { Link, Route } from 'react-router-dom';
 
 const Social = () => {
 return(
-  <div id="social-footer-content">
-    <p>Yo soy yo, don Social</p>
+  <div id="social-footer">
+    <p>Shared Footer Social</p>
   </div>
   )
 }
