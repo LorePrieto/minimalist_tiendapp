@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Header from './Header.jsx';
 import Products from './Products.jsx';
 import Subtotal from './Subtotal.jsx';

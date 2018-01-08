@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Cart from './cart/Main.jsx';
 import CustomerInformation from './customer_information/Main.jsx';
 import PaymentMethod from './payment_method/Main.jsx';
