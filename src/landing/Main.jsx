@@ -8,14 +8,13 @@ import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
 import { logoListItems, cartListItems, OtherListItems } from './../shared/tileData.js';
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const styles = theme => ({
   root: {
@@ -61,6 +60,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
     height: 'calc(100% - 56px)',
     marginTop: 56,
+    overflowX: 'hidden',
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64,
@@ -137,7 +137,6 @@ class Main extends React.Component {
             </Drawer>
           </Hidden>
           <main className={classes.content}>
-            <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
             <div className="col-md-6">
               <Route path={`${this.props.match.path}`} component={Content}/>
             </div>
