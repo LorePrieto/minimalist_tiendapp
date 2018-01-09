@@ -1,10 +1,39 @@
 import React from 'react';
-const About = () => {
-return(
-  <div id="about-footer">
-    <p>Shared Footer About</p>
-  </div>
-  )
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
+
+const styles = theme => ({
+  paper: {
+    padding: 16,
+    boxShadow: 'none',
+  },
+  typography: {
+    color: 'rgba(0, 0, 0, 0.54)',
+  }
+});
+
+function About(props) {
+  const { classes } = props;
+
+  return (
+      <Grid item xs={8}>
+        <Paper className={classes.paper}>
+          <Typography type="headline" component="h3" className={classes.typography}>
+            About us
+          </Typography>
+          <Typography component="p" className={classes.typography}>
+            Paper can be used to build surface or other elements for your application.
+          </Typography>
+        </Paper>
+      </Grid>
+  );
 }
 
-export default About;
+About.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(About);
