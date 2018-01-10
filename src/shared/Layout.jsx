@@ -15,6 +15,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import CloseIcon from 'material-ui-icons/Close';
 import { logoListItems, OtherListItems } from './tileData.js';
 import ProductsListItems from './cartData.jsx';
+import Button from 'material-ui/Button';
 
 
 const drawerWidth = 260;
@@ -90,6 +91,22 @@ const styles = theme => ({
     marginTop: '-40px',
     paddingBottom: 30,
     color: 'rgba(0,0,0,0.54)'
+  },
+  cartSubtotal: {
+    textAlign: 'right',
+    paddingBottom: 20,
+    paddingTop: 20,
+    color: 'rgba(0,0,0,0.54)',
+    paddingRight: 20,
+  },
+  button: {
+    margin: 20,
+    paddingRight: 30,
+    paddingLeft: 30,
+    position: 'absolute',
+    right: 0,
+    backgroundColor: 'rgba(254, 0, 0, 0.7)',
+    color: 'white',
   },
 });
 
@@ -195,8 +212,19 @@ class Layout extends React.Component {
                 Your Cart
               </Typography>
               <Divider style={{margin: 10}} />
-              <div>
+              <div style={{width: '100%'}}>
                 <ProductsListItems />
+              </div>
+              <div style={{width: '100%'}}>
+                <Typography type="headline" component="h3" className={classes.cartSubtotal}>
+                  Subtotal: $ 15.000
+                </Typography>
+              </div>
+              <Divider style={{margin: 10}} />
+              <div style={{width: '100%'}}>
+                <Button raised className={classes.button}>
+                  Check Out
+                </Button>
               </div>
             </div>
         </Drawer>
