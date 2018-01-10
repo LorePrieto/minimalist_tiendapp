@@ -12,10 +12,13 @@ import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
+import CloseIcon from 'material-ui-icons/Close';
 import { logoListItems, OtherListItems } from './tileData.js';
+import ProductsListItems from './cartData.jsx';
 
 
 const drawerWidth = 260;
+const drawerWidthCart = 650;
 
 const styles = theme => ({
   root: {
@@ -55,6 +58,21 @@ const styles = theme => ({
       height: '100%',
     },
   },
+  drawerCart: {
+    width: 250,
+    borderRight: 'none',
+    [theme.breakpoints.up('md')]: {
+      width: drawerWidthCart,
+      height: '100%',
+    },
+  },
+  drawerHeaderCart: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingLeft: 34,
+    paddingTop: 80,
+    ...theme.mixins.toolbar,
+  },
   content: {
     backgroundColor: 'white',
     width: '100%',
@@ -66,6 +84,12 @@ const styles = theme => ({
       height: 'calc(100% - 64px)',
       marginTop: 64,
     },
+  },
+  cartHeader: {
+    textAlign: 'center',
+    marginTop: '-40px',
+    paddingBottom: 30,
+    color: 'rgba(0,0,0,0.54)'
   },
 });
 
@@ -105,14 +129,6 @@ class Layout extends React.Component {
             </ListItem>
             <br/>
           </div>
-        <Divider />
-        <List>{OtherListItems}</List>
-      </div>
-    );
-
-    const sideList = (
-      <div className={classes.list}>
-        <List>{OtherListItems}</List>
         <Divider />
         <List>{OtherListItems}</List>
       </div>
@@ -162,15 +178,27 @@ class Layout extends React.Component {
           <main className={classes.content}>
             {children}
           </main>
-          <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer('right', false)}
-            onKeyDown={this.toggleDrawer('right', false)}
+          <Drawer anchor="right"
+            open={this.state.right}
+            onClose={this.toggleDrawer('right', false)}
+            classes = {{
+              paper: classes.drawerCart
+            }}
           >
-            {sideList}
-          </div>
+            <div className={classes.drawerInnerCart}>
+              <div className={classes.drawerHeaderCart}>
+                <IconButton onClick={this.toggleDrawer('right', false)}>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+              <Typography type="headline" component="h3" className={classes.cartHeader}>
+                Your Cart
+              </Typography>
+              <Divider style={{margin: 10}} />
+              <div>
+                <ProductsListItems />
+              </div>
+            </div>
         </Drawer>
         </div>
       </div>
