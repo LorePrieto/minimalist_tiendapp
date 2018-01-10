@@ -43,12 +43,11 @@ const styles = theme => ({
   },
 });
 
-function Products(props) {
-  const { classes } = props;
+function Products() {
   return (
     <Grid container spacing={40}>
       {productsData.map(product => (
-        <Grid item key={product.name} item xs={12} md={4}>
+        <Grid item key={product.name} xs={12} md={4}>
           <SimpleMediaCard data= {product} key={product.id} />
         </Grid>
       ))}

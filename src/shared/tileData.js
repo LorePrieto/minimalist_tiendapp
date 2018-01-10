@@ -32,7 +32,7 @@ export const cartListItems = (
 export const OtherListItems = (
   <div>
     <br/>
-    <Link to="/">
+    <Link to="/" style={{textDecoration: 'none'}}>
     <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
       <ListItemIcon>
         <HomeIcon />
@@ -42,7 +42,7 @@ export const OtherListItems = (
         </Typography>
     </ListItem>
   </Link>
-  <Link to="/catalog">
+  <Link to="/catalog" style={{textDecoration: 'none'}}>
     <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
       <ListItemIcon>
         <LoyaltyIcon />

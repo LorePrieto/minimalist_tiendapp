@@ -4,7 +4,6 @@ import About from './About.jsx';
 import Social from './Social.jsx';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
