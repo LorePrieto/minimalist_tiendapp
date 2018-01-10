@@ -59,7 +59,7 @@ const styles = theme => ({
     },
   },
   drawerCart: {
-    width: 250,
+    width: 300,
     borderRight: 'none',
     [theme.breakpoints.up('md')]: {
       width: drawerWidthCart,
@@ -123,9 +123,9 @@ class Layout extends React.Component {
               <ListItemIcon>
                 <ShoppingCartIcon />
               </ListItemIcon>
-                <Typography type="caption" gutterBottom align="center">
-                  Cart
-                </Typography>
+              <Typography type="caption" gutterBottom align="center">
+                Cart (2)
+              </Typography>
             </ListItem>
             <br/>
           </div>

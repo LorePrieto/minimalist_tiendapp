@@ -5,6 +5,9 @@ import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Card, { CardContent, CardMedia } from 'material-ui/Card';
 import Divider from 'material-ui/Divider'
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui-icons/Delete';
+import TextField from 'material-ui/TextField';
 
 const styles = theme => ({
   card: {
@@ -19,7 +22,7 @@ const styles = theme => ({
   cover: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
-      display: 'flex',
+      display: 'inline-table',
       width: 151,
       height: 151,
     },
@@ -28,6 +31,9 @@ const styles = theme => ({
     paddingLeft: 15,
     paddingRight: 15,
   },
+  textField: {
+    width: '80%',
+  },
 });
 
 const productsData = [
@@ -35,14 +41,14 @@ const productsData = [
      name: 'Taza Vidrio',
      img: '/images/taza1.png',
      variant: 'Mediana',
-     priceSale: 4000,
+     price: 4000,
      qty: 2,
  },
  {   id: 2,
-     name: 'Golden Monkey',
+     name: 'Golden Monkey Yo soy muy largo',
      variant: '100g',
      img: '/images/te2.png',
-     priceSale: 7000,
+     price: 7000,
      qty: 1,
  },
 ];
@@ -55,8 +61,8 @@ function ProductsListItems(props) {
       {productsData.map(product => (
         <div key={product.id + '-div'}style={{width: '100%'}}>
           <Grid item key={product.id} xs={12} className={classes.product}>
-            <Grid container justify="center" spacing={0}>
-              <Grid item xs={8}>
+            <Grid container justify="center" spacing={16}>
+              <Grid item xs={8} >
                 <Card className={classes.card}>
                   <div className={classes.details}>
                     <CardMedia
@@ -65,19 +71,36 @@ function ProductsListItems(props) {
                       title="Live from space album cover"
                     />
                     <CardContent className={classes.content}>
-                      <Typography type="headline" color="secondary">{product.name}</Typography>
+                      <Typography type="headline" color="secondary" >{product.name}</Typography>
                       <Typography type="subheading" color="secondary">
                         {product.variant}
                       </Typography>
+                      <br/>
+                      <Typography type="body2" color="secondary">{'Price: $ ' + product.price}</Typography>
                     </CardContent>
                   </div>
                 </Card>
               </Grid>
-              <Grid item xs={2}>
-                <p>2</p>
+              <Grid item xs={3} style={{displayFelx:"column"}}>
+                <br/>
+                <Typography type="subheading" color="secondary">{'Total: $ ' + (product.qty*product.price)}</Typography>
+                <br/>
+                <TextField
+                  id="number"
+                  label="QTY"
+                  type="number"
+                  value={product.qty}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  margin="normal"
+                />
               </Grid>
-              <Grid item xs={2}>
-                <p>3</p>
+              <Grid item xs={1}>
+                <IconButton className={classes.delete}>
+                  <DeleteIcon />
+                </IconButton>
               </Grid>
             </Grid>
           </Grid>
