@@ -16,6 +16,7 @@ import CloseIcon from 'material-ui-icons/Close';
 import { logoListItems, OtherListItems } from './tileData.js';
 import ProductsListItems from './cartData.jsx';
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 
 
 const drawerWidth = 260;
@@ -85,6 +86,19 @@ const styles = theme => ({
       height: 'calc(100% - 64px)',
       marginTop: 64,
     },
+  },
+  notice: {
+    color: 'white',
+    backgroundColor: 'rgba(254,0,0,0.2)',
+    border: 'rgba(254,0,0,0.54) 1px',
+    width: '100%',
+    paddingTop: 10,
+    paddingBottom: 15,
+    borderRadius: 40,
+    boxShadow: 'none',
+    marginTop: 5,
+    marginBottom: 5,
+    textAlign: 'center'
   },
   cartHeader: {
     textAlign: 'center',
@@ -156,6 +170,14 @@ class Layout extends React.Component {
         <div className={classes.appFrame}>
           <AppBar className={classes.appBar}>
             <Toolbar>
+              <Paper className={classes.notice} elevation={4}>
+                <Typography type="headline" component="h3" color="inherit">
+                  ¡Solo por hoy!
+                </Typography>
+                <Typography component="p" color="inherit">
+                  Paper can be used to build surface or other elements for your application.
+                </Typography>
+              </Paper>
               <IconButton
                 aria-label="open drawer"
                 onClick={this.handleDrawerToggle}
