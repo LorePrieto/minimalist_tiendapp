@@ -25,6 +25,7 @@ const styles = theme => ({
       display: 'inline-table',
       width: 151,
       height: 151,
+      borderRadius: 40,
     },
   },
   product: {
@@ -68,7 +69,7 @@ function ProductsListItems(props) {
                     <CardMedia
                       className={classes.cover}
                       image={product.img}
-                      title="Live from space album cover"
+                      title={product.name + ' ' + product.variant}
                     />
                     <CardContent className={classes.content}>
                       <Typography type="headline" color="secondary" >{product.name}</Typography>
