@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography';
 
 export const logoListItems = (
   <div>
-    <img src={"/images/logo_450x.png"} alt="logo" style={{width: '90%', display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: '15px'}}/>
+    <img src={"/images/logo.png"} alt="logo" style={{width: '90%', display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: '15px'}}/>
   </div>
 );
 
