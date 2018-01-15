@@ -10,8 +10,12 @@
     "react": "^16.2.0",
     "react-autosuggest": "^9.3.2",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "typeface-roboto": "0.0.45"
   },
   "scripts": {
@@ -19,5 +23,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.2"
   }
 }

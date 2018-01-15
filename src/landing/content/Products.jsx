@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 
+// Redux
+import {connect} from 'react-redux';
+import {addProduct} from '../../actions/products';
+import {productsSelector} from '../../selectors/products';
+
 const productsData = [
  {   id: 1,
      name: 'Taza Vidrio',
@@ -51,22 +56,47 @@ const styles = theme => ({
   },
 });
 
-function Products(props) {
-  const { classes } = props;
+class Products extends React.Component {
+  constructor (props) {
+    super(props);
+  }
 
-  return (
-    <Grid container spacing={40} className={classes.grid}>
-      {productsData.map(product => (
-        <Grid item key={product.name} xs={12} md={4}>
-          <SimpleMediaCard data= {product} key={product.id} />
-        </Grid>
-      ))}
-    </Grid>
-  );
+  componentDidMount () {
+    this.props.addProduct(1, "Bowie Mug", 999, '/images/taza1.png');
+    this.props.addProduct(2, "Fran Mug", 999999, '/images/taza2.png');
+  }
+
+  render () {
+    const { classes } = this.props;
+
+    return (
+      <Grid container spacing={40} className={classes.grid}>
+        {this.props.products.map(product => (
+          <Grid item key={product.name} xs={12} md={4}>
+            <SimpleMediaCard data={product} key={product.id} />
+          </Grid>
+        ))}
+      </Grid>
+    );
+  }
 }
 
 Products.propTypes = {
+  addProduct: PropTypes.func,
   classes: PropTypes.object.isRequired,
+  products: PropTypes.array
 };
 
-export default withStyles(styles)(Products);
+const mapStateToProps = (state) => {
+  return {
+    products: productsSelector(state)
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProduct: (id, name, price, imgUrl) => dispatch(addProduct(id, name, price, imgUrl))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Products));
