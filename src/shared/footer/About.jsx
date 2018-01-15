@@ -19,7 +19,7 @@ function About(props) {
   const { classes } = props;
 
   return (
-      <Grid item xs={8}>
+      <Grid item xs={12} md={8}>
         <Paper className={classes.paper}>
           <Typography type="headline" component="h3" className={classes.typography}>
             About us

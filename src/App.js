@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Landing from './landing/Main.jsx';
-import Checkout from './checkout/Main.jsx';
 import Product from './product/Main.jsx';
 import Catalog from './catalog/Main.jsx';
-import Cart from './cart/Main.jsx';
+import NoMatch from './noMatch/Main.jsx';
 import Reboot from 'material-ui/Reboot';
-
 
 class App extends Component {
 
@@ -17,10 +15,9 @@ class App extends Component {
         <Reboot />
         <Switch>
           <Route exact path="/" component={Landing}/>
-          <Route path="/checkout" component={Checkout}/>
-          <Route path="/product" component={Product}/>
+          <Route path="/product/:id" component={Product}/>
           <Route path="/catalog" component={Catalog}/>
-          <Route path="/cart" component={Cart}/>
+          <Route component={NoMatch}/>
         </Switch>
       </div>
     );
