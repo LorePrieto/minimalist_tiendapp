@@ -3,6 +3,7 @@ import  SimpleMediaCard  from './SimpleMediaCard.jsx';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+import { Link } from 'react-router-dom';
 
 const productsData = [
  {   id: 1,
@@ -58,7 +59,9 @@ function Products(props) {
     <Grid container spacing={40} className={classes.grid}>
       {productsData.map(product => (
         <Grid item key={product.name} xs={12} md={4}>
-          <SimpleMediaCard data= {product} key={product.id} />
+          <Link to={'/product/'+product.id} style={{textDecoration: 'none'}}>
+            <SimpleMediaCard data= {product} key={product.id} />
+          </Link>
         </Grid>
       ))}
     </Grid>

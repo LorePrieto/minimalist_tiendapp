@@ -14,7 +14,7 @@ import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
 import CloseIcon from 'material-ui-icons/Close';
 import { logoListItems, OtherListItems } from './tileData.js';
-import ProductsListItems from './cartData.jsx';
+import ProductsListItems from './cart/cartData.jsx';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 
@@ -128,6 +128,7 @@ class Layout extends React.Component {
   state = {
     mobileOpen: false,
     right: false,
+    notice: false,
   };
 
   toggleDrawer = (side, open) => () => {
@@ -165,19 +166,26 @@ class Layout extends React.Component {
       </div>
     );
 
+    console.log(this.state.notice)
+
+    let aviso = null;
+    if (this.state.notice) {
+      aviso =
+        <Paper className={classes.notice} elevation={4}>
+          <Typography type="headline" component="h3" color="inherit">
+            ¡Solo por hoy!
+          </Typography>
+          <Typography component="p" color="inherit">
+            Paper can be used to build surface or other elements for your application.
+          </Typography>
+        </Paper>;
+    }
+
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <AppBar className={classes.appBar}>
             <Toolbar>
-              <Paper className={classes.notice} elevation={4}>
-                <Typography type="headline" component="h3" color="inherit">
-                  ¡Solo por hoy!
-                </Typography>
-                <Typography component="p" color="inherit">
-                  Paper can be used to build surface or other elements for your application.
-                </Typography>
-              </Paper>
               <IconButton
                 aria-label="open drawer"
                 onClick={this.handleDrawerToggle}
@@ -185,6 +193,7 @@ class Layout extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
+              {aviso}
             </Toolbar>
           </AppBar>
           <Hidden mdUp>

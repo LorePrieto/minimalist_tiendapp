@@ -8,6 +8,8 @@ import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import TextField from 'material-ui/TextField';
+import QuantitySelector from './QuantitySelector.jsx';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   card: {
@@ -64,39 +66,31 @@ function ProductsListItems(props) {
           <Grid item key={product.id} xs={12} className={classes.product}>
             <Grid container justify="center" spacing={16}>
               <Grid item xs={8} >
-                <Card className={classes.card}>
-                  <div className={classes.details}>
-                    <CardMedia
-                      className={classes.cover}
-                      image={product.img}
-                      title={product.name + ' ' + product.variant}
-                    />
-                    <CardContent className={classes.content}>
-                      <Typography type="headline" color="secondary" >{product.name}</Typography>
-                      <Typography type="subheading" color="secondary">
-                        {product.variant}
-                      </Typography>
-                      <br/>
-                      <Typography type="body2" color="secondary">{'Price: $ ' + product.price}</Typography>
-                    </CardContent>
-                  </div>
-                </Card>
+                <a href={'/product/'+product.id} style={{textDecoration: 'none'}}>
+                  <Card className={classes.card}>
+                    <div className={classes.details}>
+                      <CardMedia
+                        className={classes.cover}
+                        image={product.img}
+                        title={product.name + ' ' + product.variant}
+                      />
+                      <CardContent className={classes.content}>
+                        <Typography type="headline" color="secondary" >{product.name}</Typography>
+                        <Typography type="subheading" color="secondary">
+                          {product.variant}
+                        </Typography>
+                        <br/>
+                        <Typography type="body2" color="secondary">{'Price: $ ' + product.price}</Typography>
+                      </CardContent>
+                    </div>
+                  </Card>
+                </a>
               </Grid>
               <Grid item xs={3} style={{displayFelx:"column"}}>
                 <br/>
                 <Typography type="subheading" color="secondary">{'Total: $ ' + (product.qty*product.price)}</Typography>
                 <br/>
-                <TextField
-                  id="number"
-                  label="QTY"
-                  type="number"
-                  value={product.qty}
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  margin="normal"
-                />
+                <QuantitySelector />
               </Grid>
               <Grid item xs={1}>
                 <IconButton className={classes.delete}>

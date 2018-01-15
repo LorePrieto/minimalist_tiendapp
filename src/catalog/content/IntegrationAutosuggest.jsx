@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper';
 import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { grey } from 'material-ui/colors';
 
 const suggestions = [
   { label: 'Taza Vidrio' },
@@ -120,8 +121,8 @@ const styles = theme => ({
 
 const theme = createMuiTheme({
   palette: {
-    primary: 'rgba(254,0,0,0.54)',
-  },
+    primary: grey,
+  }
 });
 
 class IntegrationAutosuggest extends React.Component {
