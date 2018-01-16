@@ -7,9 +7,7 @@ import Card, { CardContent, CardMedia } from 'material-ui/Card';
 import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
-import TextField from 'material-ui/TextField';
 import QuantitySelector from './QuantitySelector.jsx';
-import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   card: {

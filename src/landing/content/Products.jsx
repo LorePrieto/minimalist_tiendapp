@@ -10,44 +10,6 @@ import {connect} from 'react-redux';
 import {addProduct} from '../../actions/products';
 import {productsSelector} from '../../selectors/products';
 
-const productsData = [
- {   id: 1,
-     name: 'Taza Vidrio',
-     img: '/images/taza1.png',
-     variant: '',
-     priceOrg: 5000,
-     priceSale: 4000,
- },
- {   id: 2,
-     name: 'Golden Monkey',
-     img: '/images/te2.png',
-     variant: '',
-     priceOrg: 7000,
-     priceSale: 7000,
- },
- {   id: 3,
-     name: 'Tetera Pastel',
-     img: '/images/tetera2.png',
-     variant: '',
-     priceOrg: 5000,
-     priceSale: 3500,
- },
- {   id: 4,
-     name: 'Infusión de Rosas',
-     img: '/images/te1.png',
-     variant: '',
-     priceOrg: 4000,
-     priceSale: 4000,
- },
- {   id: 5,
-     name: 'Tazas Elegante',
-     img: '/images/taza3.png',
-     variant: '',
-     priceOrg: 5000,
-     priceSale: 5000,
- },
-];
-
 const styles = theme => ({
   root: {
     marginTop: 'none',
@@ -58,15 +20,6 @@ const styles = theme => ({
 });
 
 class Products extends React.Component {
-  constructor (props) {
-    super(props);
-  }
-
-  componentDidMount () {
-    this.props.addProduct(1, "Bowie Mug", 999, '/images/taza1.png');
-    this.props.addProduct(2, "Fran Mug", 999999, '/images/taza2.png');
-  }
-
   render () {
     const { classes } = this.props;
 

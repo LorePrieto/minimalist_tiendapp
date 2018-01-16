@@ -4,7 +4,6 @@ import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Card, { CardMedia } from 'material-ui/Card';
-import TextField from 'material-ui/TextField';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { grey } from 'material-ui/colors';
 import Button from 'material-ui/Button';
@@ -54,10 +53,6 @@ const theme = createMuiTheme({
 
 
 class ProductView extends React.Component {
-  constructor (props) {
-    super(props);
-  }
-
   render(){
     const { classes } = this.props;
 

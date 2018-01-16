@@ -10,13 +10,10 @@ import { withStyles } from 'material-ui/styles';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { grey } from 'material-ui/colors';
 
-const suggestions = [
-  { label: 'Taza Vidrio' },
-  { label: 'Golden Monkey' },
-  { label: 'Tetera Pastel' },
-  { label: 'Te' },
-  { label: 'Infusión' },
-];
+// Redux
+import {connect} from 'react-redux';
+import {addProduct} from '../../actions/products';
+import {productsSelector} from '../../selectors/products';
 
 function renderInput(inputProps) {
   const { classes, autoFocus, value, ref, ...other } = inputProps;
@@ -74,14 +71,14 @@ function getSuggestionValue(suggestion) {
   return suggestion.label;
 }
 
-function getSuggestions(value) {
+function getSuggestions(value, suggs) {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
   let count = 0;
 
   return inputLength === 0
     ? []
-    : suggestions.filter(suggestion => {
+    : suggs.filter(suggestion => {
         const keep =
           count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
 
@@ -132,8 +129,12 @@ class IntegrationAutosuggest extends React.Component {
   };
 
   handleSuggestionsFetchRequested = ({ value }) => {
+    const suggs = [];
+    this.props.products.map(products =>
+      suggs.push({label: products.name})
+    );
     this.setState({
-      suggestions: getSuggestions(value),
+      suggestions: getSuggestions(value, suggs),
     });
   };
 
@@ -182,7 +183,21 @@ class IntegrationAutosuggest extends React.Component {
 }
 
 IntegrationAutosuggest.propTypes = {
+  addProduct: PropTypes.func,
   classes: PropTypes.object.isRequired,
+  products: PropTypes.array
 };
 
-export default withStyles(styles)(IntegrationAutosuggest);
+const mapStateToProps = (state) => {
+  return {
+    products: productsSelector(state)
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProduct: (id, name, price, imgUrl) => dispatch(addProduct(id, name, price, imgUrl))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(IntegrationAutosuggest));

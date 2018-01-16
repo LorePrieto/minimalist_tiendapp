@@ -166,8 +166,6 @@ class Layout extends React.Component {
       </div>
     );
 
-    console.log(this.state.notice)
-
     let aviso = null;
     if (this.state.notice) {
       aviso =
