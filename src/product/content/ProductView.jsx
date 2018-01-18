@@ -51,8 +51,28 @@ const theme = createMuiTheme({
   }
 });
 
-
+/* TODO: product must know itself */
 class ProductView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      qty: '1',
+      id: ''
+    };
+    this.onQuantityClickHanlder =  this.onQuantityClickHanlder.bind(this);
+  }
+
+  onQuantityClickHanlder = name => event => {
+    if (event.target.value > 0) {
+      this.setState({
+          [name]: event.target.value,
+      });
+    }
+  }
+
+  onAddToCartHandler() {
+    console.log('AddToCart');
+  }
   render(){
     const { classes } = this.props;
 
@@ -74,10 +94,10 @@ class ProductView extends React.Component {
                 <VariantSelector/>
               </div>
               <div style={{width: '100%'}}>
-                <QuantitySelector />
+                <QuantitySelector onQuantityClickHanlder={this.onQuantityClickHanlder} value={this.state.qty} />
               </div>
               <div style={{width: '100%'}}>
-                <Button raised className={classes.button}>
+                <Button raised className={classes.button} onClick={this.onAddToCartHandler}>
                   Add to Cart
               </Button>
               </div>

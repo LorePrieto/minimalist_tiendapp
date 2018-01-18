@@ -30,14 +30,14 @@ class QuantitySelector extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    console.log(this.props)
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="number"
           label="Quantity"
-          value={this.state.qty}
-          onChange={this.handleChange('qty')}
+          value={this.props.qty}
+          onChange={this.props.onQuantityClickHanlder('qty')}
           type="number"
           className={classes.textField}
           InputLabelProps={{
