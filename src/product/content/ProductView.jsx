@@ -11,6 +11,12 @@ import VariantSelector from './VariantSelector.jsx';
 import Typography from 'material-ui/Typography';
 import QuantitySelector from './QuantitySelector.jsx'
 
+/** Redux */
+import {connect} from 'react-redux';
+import {addProductToCart} from '../../actions/cart';
+import {productsSelector} from '../../selectors/products';
+
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -60,6 +66,7 @@ class ProductView extends React.Component {
       id: ''
     };
     this.onQuantityClickHanlder =  this.onQuantityClickHanlder.bind(this);
+    this.onAddToCartHandler =  this.onAddToCartHandler.bind(this);
   }
 
   onQuantityClickHanlder = name => event => {
@@ -71,7 +78,8 @@ class ProductView extends React.Component {
   }
 
   onAddToCartHandler() {
-    console.log('AddToCart');
+    //const {cart} = this.context;
+    console.log(this.state.qty);
   }
   render(){
     const { classes } = this.props;
@@ -117,7 +125,30 @@ class ProductView extends React.Component {
 }
 
 ProductView.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
+
+// ProductView.contextTypes = {
+//   store: React.PropTypes.object
+// };
+
+/* TODO: Redux mapping functions */
+/** Map de state to the props of a component associated to the store's data */
+const mapStateToProps = (state) => {
+  return {
+    products: productsSelector(state)
+  };
+}
+/** Maps the dispactch methos of the store to the callback props of a components's handler of some event.
+ * Meaning: which callback call dispatches which action
+ */
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProductToCart: (product_id, variant_id, quantity) => dispatch(addProductToCart(product_id, variant_id, quantity))
+  }
+}
+
+/** Connect Method */
+const productView = connect();
 
 export default withStyles(styles)(ProductView);
