@@ -156,7 +156,7 @@ class Layout extends React.Component {
                 <ShoppingCartIcon />
               </ListItemIcon>
               <Typography type="caption" gutterBottom align="center">
-                Cart (2)
+                Carro (2)
               </Typography>
             </ListItem>
             <br/>

@@ -22,7 +22,7 @@ function About(props) {
       <Grid item xs={12} md={8}>
         <Paper className={classes.paper}>
           <Typography type="headline" component="h3" className={classes.typography}>
-            About us
+            Sobre nosotros
           </Typography>
           <Typography component="p" className={classes.typography}>
             Paper can be used to build surface or other elements for your application.

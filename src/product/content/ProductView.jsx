@@ -62,8 +62,19 @@ const theme = createMuiTheme({
 
 class ProductView extends React.Component {
   render(){
-    const { classes, product } = this.props;
-    
+    const { classes, product, variants} = this.props;
+
+    let variantNames = [];
+    variants.map(variant =>
+      variantNames.push({variant: variant.variant.options_text})
+    );
+
+    let variantHtml;
+    if (variants.length === 0)
+      variantHtml = <div id="variants"></div>;
+    else
+      variantHtml = <div style={{width: '100%'}}><VariantSelector variants={variantNames}/></div>;
+
     return (
       <MuiThemeProvider theme={theme}>
         <Header product={product}/>
@@ -79,9 +90,7 @@ class ProductView extends React.Component {
               </Card>
             </Grid>
             <Grid item xs={12} sm={7}>
-              <div style={{width: '100%'}}>
-                <VariantSelector/>
-              </div>
+              {variantHtml}
               <div style={{width: '100%'}}>
                 <QuantitySelector />
               </div>
