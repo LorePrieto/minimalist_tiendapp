@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 // Redux
 import {connect} from 'react-redux';
 import {addProduct} from '../../actions/products';
-import {masterProductsSelector} from '../../selectors/products';
+import {featureProductsSelector} from '../../selectors/products';
 
 const styles = theme => ({
   root: {
@@ -45,7 +45,7 @@ Products.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    products: masterProductsSelector(state)
+    products: featureProductsSelector(state)
   };
 }
 

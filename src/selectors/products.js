@@ -13,6 +13,11 @@ export const masterProductsSelector = createSelector(
   (products) => products.filter(is_master)
 );
 
+export const featureProductsSelector = createSelector(
+  masterProductsSelector,
+  (products) => products.slice(0,6)
+);
+
 export const variantsProductsSelector = createSelector(
     productsSelector,
     productSelector,
