@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 // Redux
 import {connect} from 'react-redux';
 import {addProduct} from '../../actions/products';
-import {productsSelector} from '../../selectors/products';
+import {masterProductsSelector} from '../../selectors/products';
 
 const styles = theme => ({
   root: {
@@ -23,7 +23,7 @@ class Products extends React.Component {
     return (
       <Grid container spacing={40} className={classes.grid}>
         {this.props.products.map(product => (
-          <Grid item key={product.name} xs={12} md={4}>
+          <Grid item key={product.name+product.id} xs={12} md={4}>
             <Link to={'/product/'+product.id} style={{textDecoration: 'none'}}>
               <SimpleMediaCard data= {product} key={product.id} />
             </Link>
@@ -42,7 +42,7 @@ Products.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    products: productsSelector(state)
+    products: masterProductsSelector(state)
   };
 }
 

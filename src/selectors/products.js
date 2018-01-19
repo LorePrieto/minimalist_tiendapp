@@ -1,13 +1,20 @@
 import { createSelector } from 'reselect';
 
-// A selector function simply accesses the state and gets a particular info.
 export const productsSelector = (state) => state.products;
 
-// This is an example. createSelector is a function from reselect library
-// which can compose many selectors together and uses a cache
-// so that it doesn't have to recompute the calculation if none of the input
-// selectors changed between two executions.
-export const firstProductSelector = createSelector(
+export const productSelector = (state, id) => state.products[id];
+
+const is_master = (product) => {
+  return product.variant.is_master
+};
+
+export const masterProductsSelector = createSelector(
   productsSelector,
-  (products) => products[0]
+  (products) => products.filter(is_master)
 );
+
+export const variantsProductsSelector = createSelector(
+    productsSelector,
+    productSelector,
+    (products, product) => products.filter(prod => !prod.variant.is_master && prod.product_id === product.product_id)
+  );

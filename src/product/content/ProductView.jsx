@@ -9,7 +9,13 @@ import { grey } from 'material-ui/colors';
 import Button from 'material-ui/Button';
 import VariantSelector from './VariantSelector.jsx';
 import Typography from 'material-ui/Typography';
-import QuantitySelector from './QuantitySelector.jsx'
+import QuantitySelector from './QuantitySelector.jsx';
+import Header from './Header.jsx';
+
+// Redux
+import {connect} from 'react-redux';
+import {addProduct} from '../../actions/products';
+import {productSelector, variantsProductsSelector} from '../../selectors/products';
 
 const styles = theme => ({
   root: {
@@ -24,9 +30,11 @@ const styles = theme => ({
   card: {
     width: '80%',
     margin: '0 auto',
+    boxShadow: 'none',
   },
   media: {
     height: 400,
+    borderRadius: 40,
   },
   textField: {
     width: '90%',
@@ -54,18 +62,19 @@ const theme = createMuiTheme({
 
 class ProductView extends React.Component {
   render(){
-    const { classes } = this.props;
-
+    const { classes, product } = this.props;
+    
     return (
       <MuiThemeProvider theme={theme}>
+        <Header product={product}/>
         <div className={classes.root}>
           <Grid container spacing={24}>
             <Grid item xs={12} sm={5}>
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image='/images/te1.png'
-                  title="Golden Monkey"
+                  image={product.image}
+                  title={product.name}
                 />
               </Card>
             </Grid>
@@ -97,7 +106,22 @@ class ProductView extends React.Component {
 }
 
 ProductView.propTypes = {
+  addProduct: PropTypes.func,
   classes: PropTypes.object.isRequired,
+  products: PropTypes.array
 };
 
-export default withStyles(styles)(ProductView);
+const mapStateToProps = (state, props) => {
+  return {
+    product: productSelector(state, props.match.params.id),
+    variants: variantsProductsSelector(state, props.match.params.id)
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProduct: (id, name, price, imgUrl, variants, categories) => dispatch(addProduct(id, name, price, imgUrl, variants, categories)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProductView));

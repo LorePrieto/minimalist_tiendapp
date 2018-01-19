@@ -40,21 +40,28 @@ const styles = theme => ({
 });
 
 function Header(props) {
-  const { classes } = props;
+  const { classes, product } = props;
+
+  let price;
+  if(product.variant.price === product.variant.promotion_price)
+    price = <div><strong> $ {product.variant.price}</strong></div>;
+  else
+    price = <div><strike>$ {product.variant.price}</strike><strong> $ {product.variant.promotion_price}</strong></div>;
+
 
   return (
     <div>
       <Paper className={classes.root} elevation={4}>
         <Typography type="display1" className={classes.name}>
-          {props.match.params.id} Golden Monkey
+          {product.name}
         </Typography>
         <Paper className={classes.data} elevation={4}>
           <Typography type="subheading" className={classes.category}>
-            Finnest teas
+            {product.taxon_names[0]}
           </Typography>
           <Divider className={classes.divider} />
           <Typography  type="display1" className={classes.price}>
-            <strike>$ 8.000</strike><strong> $ 7.000</strong>
+            {price}
           </Typography>
         </Paper>
       </Paper>
