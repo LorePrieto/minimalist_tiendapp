@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-import IntegrationAutosuggest from './IntegrationAutosuggest.jsx'
+import IntegrationAutosuggest from './IntegrationAutosuggest.jsx';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -26,7 +26,9 @@ function Header(props) {
         <Typography type="headline" component="h3" className={classes.typography}>
           Catalog
         </Typography>
-        <IntegrationAutosuggest />
+        <div>
+          <IntegrationAutosuggest />
+        </div>
       </Paper>
     </div>
   );

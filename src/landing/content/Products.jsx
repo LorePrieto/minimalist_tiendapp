@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import {connect} from 'react-redux';
-import {addProduct} from '../../actions/products';
+import {addProduct, getAllProducts} from '../../actions/products';
 import {productsSelector} from '../../selectors/products';
 
 const styles = theme => ({
@@ -20,8 +20,13 @@ const styles = theme => ({
 });
 
 class Products extends React.Component {
+  componentDidMount() {
+    this.props.getAllProducts()
+  }
+
   render () {
     const { classes } = this.props;
+    console.log(this.props.products);
 
     return (
       <Grid container spacing={40} className={classes.grid}>
@@ -51,7 +56,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addProduct: (id, name, price, imgUrl) => dispatch(addProduct(id, name, price, imgUrl))
+    addProduct: (id, name, price, imgUrl, variants, categories) => dispatch(addProduct(id, name, price, imgUrl, variants, categories)),
+    getAllProducts: () => dispatch(getAllProducts())
   }
 }
 
