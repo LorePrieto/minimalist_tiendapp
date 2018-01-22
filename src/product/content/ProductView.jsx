@@ -182,7 +182,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addProduct: (id, name, price, imgUrl, variants, categories) => dispatch(addProduct(id, name, price, imgUrl, variants, categories)),
     addProductToCart: (local_id, price, quantity) => dispatch(addProductToCart(local_id, price, quantity))
-  }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProductView));

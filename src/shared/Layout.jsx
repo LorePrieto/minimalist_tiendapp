@@ -18,6 +18,10 @@ import ProductsListItems from './cart/cartData.jsx';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 
+// Redux
+import {connect} from 'react-redux';
+import {cartSelector} from '../selectors/cart.js';
+
 
 const drawerWidth = 260;
 const drawerWidthCart = 650;
@@ -142,7 +146,13 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, theme, children } = this.props;
+    const { classes, theme, children, cart } = this.props;
+
+    let carro;
+    if (cart.length > 0)
+      carro = 'Carro ('+cart.length+')'
+    else
+      carro  = 'Carro'
 
     const navbar = (
       <div>
@@ -156,7 +166,7 @@ class Layout extends React.Component {
                 <ShoppingCartIcon />
               </ListItemIcon>
               <Typography type="caption" gutterBottom align="center">
-                Carro (2)
+                {carro}
               </Typography>
             </ListItem>
             <br/>
@@ -264,8 +274,22 @@ class Layout extends React.Component {
 }
 
 Layout.propTypes = {
+  addProductToCart: PropTypes.func,
+  cart:  PropTypes.array,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Layout);
+const mapStateToProps = (state, props) => {
+  return {
+    cart: cartSelector(state),
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles,{withTheme:true})(Layout));
