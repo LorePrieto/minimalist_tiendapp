@@ -33,17 +33,17 @@ function SimpleMediaCard(props) {
   const { classes } = props;
   let price;
 
-  if(product.priceOrg === product.priceSale)
-    price = <div><strong> $ {product.priceOrg}</strong></div>;
+  if(product.variant.price === product.variant.promotion_price)
+    price = <div><strong> $ {product.variant.price}</strong></div>;
   else
-    price = <div><strike>$ {product.priceOrg}</strike><strong> $ {product.priceSale}</strong></div>;
+    price = <div><strike>$ {product.variant.price}</strike><strong> $ {product.variant.promotion_price}</strong></div>;
 
   return (
     <div>
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image={product.img}
+          image={product.image}
           title={product.name}
         />
         <CardContent>

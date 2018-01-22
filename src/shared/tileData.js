@@ -12,23 +12,6 @@ export const logoListItems = (
   </div>
 );
 
-export const cartListItems = (
-  <div>
-    <br/>
-    <Link to="/cart">
-      <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
-        <ListItemIcon>
-          <ShoppingCartIcon />
-        </ListItemIcon>
-          <Typography type="caption" gutterBottom align="center">
-            Cart
-          </Typography>
-      </ListItem>
-    </Link>
-    <br/>
-  </div>
-);
-
 export const OtherListItems = (
   <div>
     <br/>
@@ -38,7 +21,7 @@ export const OtherListItems = (
         <HomeIcon />
       </ListItemIcon>
         <Typography type="caption" gutterBottom align="center">
-          Home
+          Inicio
         </Typography>
     </ListItem>
   </Link>
@@ -48,7 +31,7 @@ export const OtherListItems = (
         <LoyaltyIcon />
       </ListItemIcon>
         <Typography type="caption" gutterBottom align="center">
-          Catalog
+          Catálogo
         </Typography>
     </ListItem>
   </Link>

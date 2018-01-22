@@ -15,24 +15,9 @@ const styles = theme => ({
   },
 });
 
-const variants = [
-  {
-    variant: '100g'
-  },
-  {
-    variant: '200g'
-  },
-  {
-    variant: '500g'
-  },
-  {
-    variant: '1kg'
-  },
-];
-
 class VariantSelector extends React.Component {
   state = {
-    variant: '100g',
+    variant: '',
   };
 
   handleChange = name => event => {
@@ -42,14 +27,14 @@ class VariantSelector extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, variants } = this.props;
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="select-variant"
           select
-          label="Variant"
+          label="Opción"
           className={classes.textField}
           value={this.state.variant}
           onChange={this.handleChange('variant')}

@@ -130,8 +130,8 @@ class IntegrationAutosuggest extends React.Component {
 
   handleSuggestionsFetchRequested = ({ value }) => {
     const suggs = [];
-    this.props.products.map(products =>
-      suggs.push({label: products.name})
+    this.props.products.map(product =>
+      suggs.push({label: product.name})
     );
     this.setState({
       suggestions: getSuggestions(value, suggs),
@@ -150,6 +150,10 @@ class IntegrationAutosuggest extends React.Component {
     });
   };
 
+  changeProducts = (event, { suggestion, suggestionValue}) => {
+    console.log(suggestion)
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -166,13 +170,14 @@ class IntegrationAutosuggest extends React.Component {
           suggestions={this.state.suggestions}
           onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+          onSuggestionSelected={this.changeProducts}
           renderSuggestionsContainer={renderSuggestionsContainer}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={{
             autoFocus: true,
             classes,
-            placeholder: 'Search for a product or category',
+            placeholder: 'Search for a product',
             value: this.state.value,
             onChange: this.handleChange,
           }}

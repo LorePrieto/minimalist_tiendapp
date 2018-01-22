@@ -39,7 +39,7 @@ function Social(props) {
       <Grid item xs={12} md={4}>
         <Paper className={classes.paper}>
           <Typography type="headline" component="h3" className={classes.typography}>
-            Get Connected
+            Síguenos
           </Typography>
           <div className={classes.controls}>
             <IconButton
