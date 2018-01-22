@@ -248,7 +248,7 @@ class Layout extends React.Component {
                 </IconButton>
               </div>
               <Typography type="headline" component="h3" className={classes.cartHeader}>
-                Your Cart
+                Tu Carrito
               </Typography>
               <Divider style={{margin: 10}} />
               <div style={{width: '100%'}}>

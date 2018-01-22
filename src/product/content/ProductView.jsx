@@ -67,14 +67,13 @@ class ProductView extends React.Component {
     this.state = {
       qty: '1',
       id: this.props.variants.length > 0 ? this.props.variants[0].id : this.props.product.id,
-      price: this.props.product.variant.promotion_price,
     };
-    this.onQuantityClickHanlder =  this.onQuantityClickHanlder.bind(this);
+    this.onQuantityClickHandler =  this.onQuantityClickHandler.bind(this);
     this.onAddToCartHandler =  this.onAddToCartHandler.bind(this);
-    this.onVariantClickHanlder =  this.onVariantClickHanlder.bind(this);
+    this.onVariantClickHandler =  this.onVariantClickHandler.bind(this);
   }
 
-  onQuantityClickHanlder = () => event => {
+  onQuantityClickHandler = () => event => {
     if (event.target.value > 0) {
       this.setState({
           qty: event.target.value,
@@ -82,14 +81,15 @@ class ProductView extends React.Component {
     }
   }
 
-  onVariantClickHanlder = () => event => {
+  onVariantClickHandler = () => event => {
     this.setState({
       id: event.target.value,
     });
   }
 
   onAddToCartHandler() {
-    this.props.addProductToCart(this.state.id, this.state.price, parseInt(this.state.qty, 10));
+    const variant = this.props.variants.find(variant => variant.id === this.state.id);
+    this.props.addProductToCart(variant.id, variant.name, variant.image, variant.variant.options_text, variant.variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.id);
   };
 
   render(){
@@ -105,7 +105,7 @@ class ProductView extends React.Component {
       variantHtml = <div id="variants"></div>;
     else
       variantHtml = <div style={{width: '100%'}}>
-                      <VariantSelector variantNames={variantNames} onVariantClickHanlder={this.onVariantClickHanlder} variant={this.state.id}/>
+                      <VariantSelector variantNames={variantNames} onVariantClickHandler={this.onVariantClickHandler} variant={this.state.id}/>
                     </div>;
 
     let currentVar = variants.find( variant => {
@@ -114,10 +114,12 @@ class ProductView extends React.Component {
     if (!currentVar)
       currentVar = product;
     let displayPrice;
-    if(currentVar.variant.price === currentVar.variant.promotion_price)
+    if(currentVar.variant.price === currentVar.variant.promotion_price){
       displayPrice = <div><strong> $ {currentVar.variant.price}</strong></div>;
-    else
+    }
+    else{
       displayPrice = <div><strike>$ {currentVar.variant.price}</strike><strong> $ {currentVar.variant.promotion_price}</strong></div>;
+    }
 
 
     if (product.variant.is_master)
@@ -138,7 +140,7 @@ class ProductView extends React.Component {
               <Grid item xs={12} sm={7}>
                 {variantHtml}
                 <div style={{width: '100%'}}>
-                  <QuantitySelector onQuantityClickHanlder={this.onQuantityClickHanlder} qty={this.state.qty}/>
+                  <QuantitySelector onQuantityClickHandler={this.onQuantityClickHandler} qty={this.state.qty}/>
                 </div>
                 <div style={{width: '100%'}}>
                   <Button raised className={classes.button} onClick={this.onAddToCartHandler}>
@@ -174,14 +176,13 @@ const mapStateToProps = (state, props) => {
   return {
     product: productSelector(state, props.match.params.id),
     variants: variantsProductsSelector(state, props.match.params.id),
-
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addProduct: (id, name, price, imgUrl, variants, categories) => dispatch(addProduct(id, name, price, imgUrl, variants, categories)),
-    addProductToCart: (local_id, price, quantity) => dispatch(addProductToCart(local_id, price, quantity))
+    addProductToCart: (local_id, name, img, variant, price, quantity, product_id) => dispatch(addProductToCart(local_id, name, img, variant, price, quantity, product_id))
   };
 }
 

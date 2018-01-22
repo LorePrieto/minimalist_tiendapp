@@ -18,7 +18,7 @@ const styles = theme => ({
 class VariantSelector extends React.Component {
 
   render() {
-    const { classes, variantNames, variant, onVariantClickHanlder } = this.props;
+    const { classes, variantNames, variant, onVariantClickHandler } = this.props;
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
@@ -28,7 +28,7 @@ class VariantSelector extends React.Component {
           label="Opción"
           className={classes.textField}
           value={variant}
-          onChange={onVariantClickHanlder('variant')}
+          onChange={onVariantClickHandler()}
           SelectProps={{
             MenuProps: {
               className: classes.menu,

@@ -1,16 +1,15 @@
 import {
     ADD_ITEM_TO_CART,
-    ADD_TO_ITEM_QUANTITY,
     REMOVE_ITEM_FROM_CART,
-    DEDUCT_FROM_ITEM_QUANTITY
+    CHANGE_ITEM_QUANTITY
 } from '../actions/cart';
 
 const cart = (state=[], action) => {
   const { type } = action;
   const newState = [...state];
   switch (type) {
-      case ADD_ITEM_TO_CART:
-        const {local_id, price, quantity} = action;
+      case ADD_ITEM_TO_CART: {
+        const {local_id, name, img, variant, price, quantity, product_id} = action;
         let exists = false;
         newState.forEach(entry => {
           if (entry.local_id === local_id && entry.price === price){
@@ -19,17 +18,25 @@ const cart = (state=[], action) => {
           }
         });
         if (!exists){
-          newState.push({local_id, price, quantity});
+          newState.push({local_id, name, img, variant, price, quantity, product_id});
         }
         return newState;
-      case REMOVE_ITEM_FROM_CART:
+      }
+      case REMOVE_ITEM_FROM_CART: {
         return newState;
-      case ADD_TO_ITEM_QUANTITY:
+      }
+      case CHANGE_ITEM_QUANTITY: {
+        const {local_id, price, quantity} = action;
+        newState.forEach(entry => {
+          if (entry.local_id === local_id && entry.price === price){
+            entry.quantity = quantity;
+          }
+        });
         return newState;
-      case DEDUCT_FROM_ITEM_QUANTITY:
+      }
+      default:{
         return newState;
-      default:
-        return newState;
+      }
   }
 }
 
