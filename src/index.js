@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import root from './reducers/root';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import { getAllProducts } from './actions/products.js'
+import { getAllProducts } from './actions/products.js';
 
 const middlewares = [thunk];
 

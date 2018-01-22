@@ -66,7 +66,8 @@ class ProductView extends React.Component {
     super(props);
     this.state = {
       qty: '1',
-      id: ''
+      id: this.props.match.params.id,
+      price: this.props.product.variant.promotion_price
     };
     this.onQuantityClickHanlder =  this.onQuantityClickHanlder.bind(this);
     this.onAddToCartHandler =  this.onAddToCartHandler.bind(this);
@@ -81,12 +82,11 @@ class ProductView extends React.Component {
   }
 
   onAddToCartHandler() {
-    //const {cart} = this.context;
-    console.log(this.state.qty);
+    this.props.addProductToCart(this.state.id, this.state.price, parseInt(this.state.qty, 10));
   };
 
   render(){
-    const { classes, product, variants} = this.props;
+    const { classes, product, variants } = this.props;
 
     let variantNames = [];
     variants.map(variant =>
@@ -117,12 +117,12 @@ class ProductView extends React.Component {
               <Grid item xs={12} sm={7}>
                 {variantHtml}
                 <div style={{width: '100%'}}>
-                  <QuantitySelector onQuantityClickHanlder={this.onQuantityClickHanlder} value={this.state.qty}/>
+                  <QuantitySelector onQuantityClickHanlder={this.onQuantityClickHanlder} qty={this.state.qty}/>
                 </div>
                 <div style={{width: '100%'}}>
                   <Button raised className={classes.button} onClick={this.onAddToCartHandler}>
                     Add to Cart
-                </Button>
+                  </Button>
                 </div>
                 <div style={{width: '100%'}}>
                   <Paper className={classes.description} elevation={4}>
@@ -152,16 +152,15 @@ ProductView.propTypes = {
 const mapStateToProps = (state, props) => {
   return {
     product: productSelector(state, props.match.params.id),
-    variants: variantsProductsSelector(state, props.match.params.id)
+    variants: variantsProductsSelector(state, props.match.params.id),
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addProduct: (id, name, price, imgUrl, variants, categories) => dispatch(addProduct(id, name, price, imgUrl, variants, categories)),
-    addProductToCart: (product_id, variant_id, quantity) => dispatch(addProductToCart(product_id, variant_id, quantity))
+    addProductToCart: (local_id, price, quantity) => dispatch(addProductToCart(local_id, price, quantity))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProductView));
-
