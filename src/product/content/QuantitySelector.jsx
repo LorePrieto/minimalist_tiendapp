@@ -30,7 +30,7 @@ class QuantitySelector extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props)
+    
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
