@@ -5,20 +5,14 @@ import {
     DEDUCT_FROM_ITEM_QUANTITY 
 } from '../actions/cart';
 
-/* Handle different actions */
-const handleAddItemToCart = (product_id, variant_id, quantity, newState) => {
-    newState.push({product_id, variant_id, quantity});
-    return newState;
-}
-
 const cart = (state=[], action) => {
-  const {product_id, variant_id, quantity} = action;
+  const { type } = action;
   const newState = [...state];
   switch (action.type) {
       case ADD_ITEM_TO_CART:
-          handleAddItemToCart()
+          const {local_id, price, quantity} = action;
+          //Do something
           break;
-  
       default:
           return(newState);
   }
