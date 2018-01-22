@@ -133,7 +133,7 @@ ProductView.propTypes = {
 // };
 
 /* TODO: Redux mapping functions */
-/** Map de state to the props of a component associated to the store's data */
+/** Map the state to the props of a component associated to the store's data */
 const mapStateToProps = (state) => {
   return {
     products: productsSelector(state)
