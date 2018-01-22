@@ -66,19 +66,26 @@ class ProductView extends React.Component {
     super(props);
     this.state = {
       qty: '1',
-      id: this.props.match.params.id,
-      price: this.props.product.variant.promotion_price
+      id: this.props.variants.length > 0 ? this.props.variants[0].id : this.props.product.id,
+      price: this.props.product.variant.promotion_price,
     };
     this.onQuantityClickHanlder =  this.onQuantityClickHanlder.bind(this);
     this.onAddToCartHandler =  this.onAddToCartHandler.bind(this);
+    this.onVariantClickHanlder =  this.onVariantClickHanlder.bind(this);
   }
 
-  onQuantityClickHanlder = name => event => {
+  onQuantityClickHanlder = () => event => {
     if (event.target.value > 0) {
       this.setState({
-          [name]: event.target.value,
+          qty: event.target.value,
       });
     }
+  }
+
+  onVariantClickHanlder = () => event => {
+    this.setState({
+      id: event.target.value,
+    });
   }
 
   onAddToCartHandler() {
@@ -90,19 +97,33 @@ class ProductView extends React.Component {
 
     let variantNames = [];
     variants.map(variant =>
-      variantNames.push({variant: variant.variant.options_text})
+      variantNames.push({label: variant.variant.options_text, value: variant.id})
     );
 
     let variantHtml;
     if (variants.length === 0)
       variantHtml = <div id="variants"></div>;
     else
-      variantHtml = <div style={{width: '100%'}}><VariantSelector variants={variantNames}/></div>;
+      variantHtml = <div style={{width: '100%'}}>
+                      <VariantSelector variantNames={variantNames} onVariantClickHanlder={this.onVariantClickHanlder} variant={this.state.id}/>
+                    </div>;
+
+    let currentVar = variants.find( variant => {
+      return variant.id === this.state.id;
+    });
+    if (!currentVar)
+      currentVar = product;
+    let displayPrice;
+    if(currentVar.variant.price === currentVar.variant.promotion_price)
+      displayPrice = <div><strong> $ {currentVar.variant.price}</strong></div>;
+    else
+      displayPrice = <div><strike>$ {currentVar.variant.price}</strike><strong> $ {currentVar.variant.promotion_price}</strong></div>;
+
 
     if (product.variant.is_master)
       return (
         <MuiThemeProvider theme={theme}>
-          <Header product={product}/>
+          <Header product={product} price={displayPrice}/>
           <div className={classes.root}>
             <Grid container spacing={24}>
               <Grid item xs={12} sm={5}>
@@ -153,6 +174,7 @@ const mapStateToProps = (state, props) => {
   return {
     product: productSelector(state, props.match.params.id),
     variants: variantsProductsSelector(state, props.match.params.id),
+
   };
 }
 
