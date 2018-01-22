@@ -22,4 +22,4 @@ export const variantsProductsSelector = createSelector(
     productsSelector,
     productSelector,
     (products, product) => products.filter(prod => !prod.variant.is_master && prod.product_id === product.product_id)
-  );
+);
