@@ -61,7 +61,6 @@ const theme = createMuiTheme({
   }
 });
 
-/* TODO: product must know itself */
 class ProductView extends React.Component {
   constructor(props) {
     super(props);
