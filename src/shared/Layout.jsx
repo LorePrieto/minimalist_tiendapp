@@ -20,7 +20,7 @@ import Paper from 'material-ui/Paper';
 
 // Redux
 import {connect} from 'react-redux';
-import {cartSelector} from '../selectors/cart.js';
+import {cartSelector, getSubtotal} from '../selectors/cart.js';
 
 
 const drawerWidth = 260;
@@ -256,7 +256,7 @@ class Layout extends React.Component {
               </div>
               <div style={{width: '100%'}}>
                 <Typography type="headline" component="h3" className={classes.cartSubtotal}>
-                  Subtotal: $ 15.000
+                  Subtotal: $ {this.props.subtotal}
                 </Typography>
               </div>
               <Divider style={{margin: 10}} />
@@ -283,6 +283,7 @@ Layout.propTypes = {
 const mapStateToProps = (state, props) => {
   return {
     cart: cartSelector(state),
+    subtotal: getSubtotal(state),
   };
 }
 
