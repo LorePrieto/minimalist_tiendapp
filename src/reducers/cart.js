@@ -23,6 +23,12 @@ const cart = (state=[], action) => {
         return newState;
       }
       case REMOVE_ITEM_FROM_CART: {
+        const { local_id, price } = action;
+        newState.forEach((item, index, object) => {
+          if (item.local_id === local_id && item.price === price){
+            object.splice(index, 1);
+          }
+        });
         return newState;
       }
       case CHANGE_ITEM_QUANTITY: {

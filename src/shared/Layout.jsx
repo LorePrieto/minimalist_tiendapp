@@ -262,7 +262,7 @@ class Layout extends React.Component {
               <Divider style={{margin: 10}} />
               <div style={{width: '100%'}}>
                 <Button raised className={classes.button}>
-                  Check Out
+                  Comprar
                 </Button>
               </div>
             </div>

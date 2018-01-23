@@ -15,10 +15,11 @@ export const addProductToCart = (local_id, name, img, variant, price, quantity, 
   };
 };
 
-export const removeItemFromCart = (local_id) => {
+export const removeItemFromCart = (local_id, price) => {
   return {
     type: REMOVE_ITEM_FROM_CART,
-    local_id
+    local_id,
+    price,
   };
 };
 

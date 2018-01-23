@@ -11,7 +11,7 @@ import QuantitySelector from './QuantitySelector.jsx';
 
 // Redux
 import { connect } from 'react-redux';
-import { changeItemQuantity } from '../../actions/cart';
+import { changeItemQuantity, removeItemFromCart } from '../../actions/cart';
 
 
 const styles = theme => ({
@@ -51,6 +51,7 @@ class CartItem extends React.Component {
       qty: this.props.cartItem.quantity,
     };
     this.onQuantityClickHandler =  this.onQuantityClickHandler.bind(this);
+    this.onDeleteClickHandler = this.onDeleteClickHandler.bind(this);
   }
 
   onQuantityClickHandler = () => event => {
@@ -60,6 +61,11 @@ class CartItem extends React.Component {
       });
       this.props.changeItemQuantity(this.props.cartItem.local_id, this.props.cartItem.price, parseInt(event.target.value,10), this.props.cartItem.product_id);
     }
+  }
+
+  onDeleteClickHandler = () => event => {
+    console.log("Handler");
+    this.props.removeItemFromCart(this.props.cartItem.local_id, this.props.cartItem.price);
   }
 
   render() {
@@ -97,7 +103,7 @@ class CartItem extends React.Component {
               <QuantitySelector onQuantityClickHandler={this.onQuantityClickHandler} qty={this.state.qty}/>
             </Grid>
             <Grid item xs={1}>
-              <IconButton className={classes.delete}>
+              <IconButton className={classes.delete} onClick={this.onDeleteClickHandler()}>
                 <DeleteIcon />
               </IconButton>
             </Grid>
@@ -113,6 +119,7 @@ CartItem.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   changeItemQuantity: PropTypes.func,
+  removeItemFromCart: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {
@@ -123,7 +130,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeItemQuantity: (local_id, price, quantity) => dispatch(changeItemQuantity(local_id, price, quantity))
+    changeItemQuantity: (local_id, price, quantity) => dispatch(changeItemQuantity(local_id, price, quantity)),
+    removeItemFromCart: (local_id, price) => dispatch(removeItemFromCart(local_id, price)),
   };
 }
 
