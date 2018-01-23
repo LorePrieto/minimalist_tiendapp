@@ -43,6 +43,11 @@ const styles = theme => ({
   textField: {
     width: '80%',
   },
+  stockText:{
+    color: 'rgba(0,0,0,0.54)',
+    fontSize: '0.7em',
+    marginTop: 10,
+  },
 });
 
 
@@ -87,6 +92,13 @@ class CartItem extends React.Component {
 
   render() {
     const { classes, cartItem } = this.props;
+    const product = this.props.products.find(product => product.id === this.props.cartItem.local_id);
+
+    let stockText;
+    if(product.variant.total_on_hand < 0)
+      stockText = 'Algunos de estos productos no se encuentran en stock. Serán enviados apenas estén listos'
+    else
+      stockText = 'Todos los productos están disponibles y serán enviados a la brevedad.'
 
     return (
       <div key={cartItem.local_id + '-div'}style={{width: '100%'}}>
@@ -125,6 +137,12 @@ class CartItem extends React.Component {
               </IconButton>
             </Grid>
           </Grid>
+          <div style={{paddingLeft: 30, display: 'flex'}}>
+            <Typography className={classes.stockText}>
+              {stockText}
+            </Typography>
+            <br/>
+          </div>
         </Grid>
         <Snackbar
           anchorOrigin={{

@@ -12,6 +12,7 @@ import VariantSelector from './VariantSelector.jsx';
 import Typography from 'material-ui/Typography';
 import QuantitySelector from './QuantitySelector.jsx';
 import Header from './Header.jsx';
+import Snackbar from "material-ui/Snackbar";
 
 // Redux
 import {connect} from 'react-redux';
@@ -85,12 +86,17 @@ class ProductView extends React.Component {
       this.setState({
           qty: event.target.value,
       });
+    }else if (!(variant.variant.total_on_hand >= event.target.value || variant.variant.is_backorderable)) {
+      this.setState({
+        openSnack: true,
+      })
     }
   }
 
   onVariantClickHandler = () => event => {
     this.setState({
       id: event.target.value,
+      qty: '1',
     });
   }
 
@@ -105,6 +111,11 @@ class ProductView extends React.Component {
           qty: '0',
       });
     }
+  };
+
+  handleSnackBarClose = (ev, reason) => {
+    if (reason !== 'clickaway')
+      this.setState({ openSnack: false });
   };
 
   render(){
@@ -151,7 +162,10 @@ class ProductView extends React.Component {
 
     let stockText;
     if( currentVar.variant.is_backorderable ){
-      stockText = 'Quedan ' +currentVar.variant.total_on_hand+' en stock pero puedes comprar más y te los mandaremos cuando esten listos.';
+      if (currentVar.variant.total_on_hand <= 0)
+        stockText = 'No quedan unidades en stock pero puedes comprar y te los mandaremos cuando estén listos.';
+      else
+        stockText = 'Quedan ' +currentVar.variant.total_on_hand+' en stock pero puedes comprar más y te los mandaremos cuando estén listos.';
     } else {
       stockText = 'Quedan ' +currentVar.variant.total_on_hand+' en stock.';
     }
@@ -202,6 +216,19 @@ class ProductView extends React.Component {
               </Grid>
             </Grid>
           </div>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center"
+            }}
+            open={this.state.openSnack}
+            onClose={this.handleSnackBarClose}
+            autoHideDuration={1000}
+            SnackbarContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            message={<span id="message-id">No hay más stock</span>}
+          />
         </MuiThemeProvider>
       );
     else{
