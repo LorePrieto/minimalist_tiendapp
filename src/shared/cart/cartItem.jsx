@@ -12,6 +12,7 @@ import QuantitySelector from './QuantitySelector.jsx';
 // Redux
 import { connect } from 'react-redux';
 import { changeItemQuantity, removeItemFromCart } from '../../actions/cart';
+import { changeStock } from '../../actions/products';
 
 
 const styles = theme => ({
@@ -59,12 +60,13 @@ class CartItem extends React.Component {
       this.setState({
         qty: event.target.value,
       });
+      this.props.changeStock(this.props.cartItem.local_id, (parseInt(event.target.value,10) - this.props.cartItem.quantity));
       this.props.changeItemQuantity(this.props.cartItem.local_id, this.props.cartItem.price, parseInt(event.target.value,10), this.props.cartItem.product_id);
     }
   }
 
   onDeleteClickHandler = () => event => {
-    console.log("Handler");
+    this.props.changeStock(this.props.cartItem.local_id, -1*this.props.cartItem.quantity);
     this.props.removeItemFromCart(this.props.cartItem.local_id, this.props.cartItem.price);
   }
 
@@ -120,6 +122,7 @@ CartItem.propTypes = {
   theme: PropTypes.object.isRequired,
   changeItemQuantity: PropTypes.func,
   removeItemFromCart: PropTypes.func,
+  changeStock: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {
@@ -132,6 +135,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeItemQuantity: (local_id, price, quantity) => dispatch(changeItemQuantity(local_id, price, quantity)),
     removeItemFromCart: (local_id, price) => dispatch(removeItemFromCart(local_id, price)),
+    changeStock: (local_id, quantity) => dispatch(changeStock(local_id, quantity)),
   };
 }
 

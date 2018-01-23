@@ -1,7 +1,7 @@
 import myData from './products.json'
 
-let cont = 0;
 export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const REMOVE_STOCK = 'REMOVE_STOCK';
 
 export const addProduct = (
   id,
@@ -42,6 +42,15 @@ export const addProduct = (
   };
 };
 
+export const changeStock = (local_id, quantity) =>{
+  return{
+    type: REMOVE_STOCK,
+    local_id,
+    quantity
+  }
+}
+
+let cont = 0;
 export const getAllProducts = () => dispatch => {
   let products = myData.products;
   products.map( product => (

@@ -15,7 +15,7 @@ import Header from './Header.jsx';
 
 // Redux
 import {connect} from 'react-redux';
-import {addProduct} from '../../actions/products';
+import {addProduct, changeStock} from '../../actions/products';
 import {addProductToCart} from '../../actions/cart';
 import {productSelector, variantsProductsSelector} from '../../selectors/products';
 
@@ -92,6 +92,7 @@ class ProductView extends React.Component {
     if (!variant)
       variant = this.props.product;
     this.props.addProductToCart(variant.id, variant.name, variant.image, variant.variant.options_text, variant.variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.id);
+    this.props.changeStock(variant.id, parseInt(this.state.qty, 10));
   };
 
   render(){
@@ -170,6 +171,7 @@ class ProductView extends React.Component {
 ProductView.propTypes = {
   addProduct: PropTypes.func,
   addProductToCart: PropTypes.func,
+  changeStock: PropTypes.func,
   classes: PropTypes.object.isRequired,
   products: PropTypes.array
 };
@@ -184,7 +186,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addProduct: (id, name, price, imgUrl, variants, categories) => dispatch(addProduct(id, name, price, imgUrl, variants, categories)),
-    addProductToCart: (local_id, name, img, variant, price, quantity, product_id) => dispatch(addProductToCart(local_id, name, img, variant, price, quantity, product_id))
+    addProductToCart: (local_id, name, img, variant, price, quantity, product_id) => dispatch(addProductToCart(local_id, name, img, variant, price, quantity, product_id)),
+    changeStock: (local_id, quantity) => dispatch(changeStock(local_id, quantity)),
   };
 }
 
