@@ -88,7 +88,9 @@ class ProductView extends React.Component {
   }
 
   onAddToCartHandler() {
-    const variant = this.props.variants.find(variant => variant.id === this.state.id);
+    let variant = this.props.variants.find(variant => variant.id === this.state.id);
+    if (!variant)
+      variant = this.props.product;
     this.props.addProductToCart(variant.id, variant.name, variant.image, variant.variant.options_text, variant.variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.id);
   };
 
