@@ -8,11 +8,13 @@ import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import QuantitySelector from './QuantitySelector.jsx';
+import Snackbar from "material-ui/Snackbar";
 
 // Redux
 import { connect } from 'react-redux';
 import { changeItemQuantity, removeItemFromCart } from '../../actions/cart';
 import { changeStock } from '../../actions/products';
+import { productsSelector } from '../../selectors/products';
 
 
 const styles = theme => ({
@@ -50,18 +52,26 @@ class CartItem extends React.Component {
     super(props);
     this.state = {
       qty: this.props.cartItem.quantity,
+      openSnack: false
     };
     this.onQuantityClickHandler =  this.onQuantityClickHandler.bind(this);
     this.onDeleteClickHandler = this.onDeleteClickHandler.bind(this);
   }
 
   onQuantityClickHandler = () => event => {
-    if (event.target.value > 0){
+    const product = this.props.products.find(product => product.id === this.props.cartItem.local_id);
+    if (((product.variant.total_on_hand + this.props.cartItem.quantity) >= event.target.value || product.variant.is_backorderable) && (event.target.value > 0 || event.target.value === '')){
       this.setState({
         qty: event.target.value,
       });
-      this.props.changeStock(this.props.cartItem.local_id, (parseInt(event.target.value,10) - this.props.cartItem.quantity));
-      this.props.changeItemQuantity(this.props.cartItem.local_id, this.props.cartItem.price, parseInt(event.target.value,10), this.props.cartItem.product_id);
+      if (event.target.value){
+        this.props.changeStock(this.props.cartItem.local_id, (parseInt(event.target.value,10) - this.props.cartItem.quantity));
+        this.props.changeItemQuantity(this.props.cartItem.local_id, this.props.cartItem.price, parseInt(event.target.value,10), this.props.cartItem.product_id);
+      }
+    }else if (!((product.variant.total_on_hand + this.props.cartItem.quantity) >= event.target.value || product.variant.is_backorderable)) {
+      this.setState({
+        openSnack: true,
+      })
     }
   }
 
@@ -69,6 +79,11 @@ class CartItem extends React.Component {
     this.props.changeStock(this.props.cartItem.local_id, -1*this.props.cartItem.quantity);
     this.props.removeItemFromCart(this.props.cartItem.local_id, this.props.cartItem.price);
   }
+
+  handleSnackBarClose = (ev, reason) => {
+    if (reason !== 'clickaway')
+      this.setState({ openSnack: false });
+  };
 
   render() {
     const { classes, cartItem } = this.props;
@@ -111,6 +126,19 @@ class CartItem extends React.Component {
             </Grid>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          open={this.state.openSnack}
+          onClose={this.handleSnackBarClose}
+          autoHideDuration={1000}
+          SnackbarContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">No hay más stock</span>}
+        />
         <Divider style={{margin: 10}} />
       </div>
     );
@@ -127,7 +155,7 @@ CartItem.propTypes = {
 
 const mapStateToProps = (state, props) => {
   return {
-
+    products: productsSelector(state)
   };
 }
 

@@ -132,7 +132,7 @@ class Layout extends React.Component {
   state = {
     mobileOpen: false,
     right: false,
-    notice: true,
+    notice: false,
   };
 
   toggleDrawer = (side, open) => () => {

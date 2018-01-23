@@ -53,6 +53,10 @@ const styles = theme => ({
     width: '90%',
     boxShadow: 'none',
   }),
+  stockText:{
+    color: 'rgba(0,0,0,0.54)',
+    fontSize: '0.7em',
+  },
 });
 
 const theme = createMuiTheme({
@@ -74,7 +78,10 @@ class ProductView extends React.Component {
   }
 
   onQuantityClickHandler = () => event => {
-    if (event.target.value > 0) {
+    let variant = this.props.variants.find(variant => variant.id === this.state.id);
+    if (!variant)
+      variant = this.props.product;
+    if ((variant.variant.total_on_hand >= event.target.value || variant.variant.is_backorderable) && (event.target.value > 0 || event.target.value === '')){
       this.setState({
           qty: event.target.value,
       });
@@ -88,11 +95,16 @@ class ProductView extends React.Component {
   }
 
   onAddToCartHandler() {
-    let variant = this.props.variants.find(variant => variant.id === this.state.id);
-    if (!variant)
-      variant = this.props.product;
-    this.props.addProductToCart(variant.id, variant.name, variant.image, variant.variant.options_text, variant.variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.id);
-    this.props.changeStock(variant.id, parseInt(this.state.qty, 10));
+    if (this.state.qty > 0){
+      let variant = this.props.variants.find(variant => variant.id === this.state.id);
+      if (!variant)
+        variant = this.props.product;
+      this.props.addProductToCart(variant.id, variant.name, variant.image, variant.variant.options_text, variant.variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.id);
+      this.props.changeStock(variant.id, parseInt(this.state.qty, 10));
+      this.setState({
+          qty: '0',
+      });
+    }
   };
 
   render(){
@@ -116,12 +128,32 @@ class ProductView extends React.Component {
     });
     if (!currentVar)
       currentVar = product;
+
     let displayPrice;
     if(currentVar.variant.price === currentVar.variant.promotion_price){
       displayPrice = <div><strong> $ {currentVar.variant.price}</strong></div>;
-    }
-    else{
+    }else{
       displayPrice = <div><strike>$ {currentVar.variant.price}</strike><strong> $ {currentVar.variant.promotion_price}</strong></div>;
+    }
+
+    let disable;
+    if (currentVar.variant.total_on_hand > 0 || currentVar.variant.is_backorderable){
+      disable = 'false';
+    }else{
+      disable = 'true';
+    }
+
+    let addCartText;
+    if (disable === 'true')
+      addCartText = 'Sin Stock';
+    else
+      addCartText = 'Agregar al Carro';
+
+    let stockText;
+    if( currentVar.variant.is_backorderable ){
+      stockText = 'Quedan ' +currentVar.variant.total_on_hand+' en stock pero puedes comprar más y te los mandaremos cuando esten listos.';
+    } else {
+      stockText = 'Quedan ' +currentVar.variant.total_on_hand+' en stock.';
     }
 
 
@@ -143,11 +175,21 @@ class ProductView extends React.Component {
               <Grid item xs={12} sm={7}>
                 {variantHtml}
                 <div style={{width: '100%'}}>
-                  <QuantitySelector onQuantityClickHandler={this.onQuantityClickHandler} qty={this.state.qty}/>
+                  <QuantitySelector
+                    onQuantityClickHandler={this.onQuantityClickHandler}
+                    qty={this.state.qty}
+                    disabled={disable}
+                  />
+                </div>
+                <div>
+                  <Typography className={classes.stockText}>
+                    {stockText}
+                  </Typography>
+                  <br/>
                 </div>
                 <div style={{width: '100%'}}>
-                  <Button raised className={classes.button} onClick={this.onAddToCartHandler}>
-                    Agregar al Carro
+                  <Button raised disabled={disable === 'true'} className={classes.button} onClick={this.onAddToCartHandler}>
+                    {addCartText}
                   </Button>
                 </div>
                 <div style={{width: '100%'}}>

@@ -17,7 +17,7 @@ const styles = theme => ({
 
 class QuantitySelector extends React.Component {
   render() {
-    const { classes, qty, onQuantityClickHandler } = this.props;
+    const { classes, qty, onQuantityClickHandler, disabled } = this.props;
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
@@ -25,6 +25,7 @@ class QuantitySelector extends React.Component {
           id="number"
           label="Quantity"
           value={qty}
+          disabled={disabled === 'true'}
           onChange={onQuantityClickHandler()}
           type="number"
           className={classes.textField}
