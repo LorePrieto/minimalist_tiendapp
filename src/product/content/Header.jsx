@@ -40,14 +40,7 @@ const styles = theme => ({
 });
 
 function Header(props) {
-  const { classes, product } = props;
-
-  let price;
-  if(product.variant.price === product.variant.promotion_price)
-    price = <div><strong> $ {product.variant.price}</strong></div>;
-  else
-    price = <div><strike>$ {product.variant.price}</strike><strong> $ {product.variant.promotion_price}</strong></div>;
-
+  const { classes, product, price } = props;
 
   return (
     <div>

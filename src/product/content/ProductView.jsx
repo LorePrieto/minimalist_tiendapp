@@ -16,6 +16,7 @@ import Header from './Header.jsx';
 // Redux
 import {connect} from 'react-redux';
 import {addProduct} from '../../actions/products';
+import {addProductToCart} from '../../actions/cart';
 import {productSelector, variantsProductsSelector} from '../../selectors/products';
 
 const styles = theme => ({
@@ -60,26 +61,73 @@ const theme = createMuiTheme({
   }
 });
 
-
 class ProductView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      qty: '1',
+      id: this.props.variants.length > 0 ? this.props.variants[0].id : this.props.product.id,
+    };
+    this.onQuantityClickHandler =  this.onQuantityClickHandler.bind(this);
+    this.onAddToCartHandler =  this.onAddToCartHandler.bind(this);
+    this.onVariantClickHandler =  this.onVariantClickHandler.bind(this);
+  }
+
+  onQuantityClickHandler = () => event => {
+    if (event.target.value > 0) {
+      this.setState({
+          qty: event.target.value,
+      });
+    }
+  }
+
+  onVariantClickHandler = () => event => {
+    this.setState({
+      id: event.target.value,
+    });
+  }
+
+  onAddToCartHandler() {
+    let variant = this.props.variants.find(variant => variant.id === this.state.id);
+    if (!variant)
+      variant = this.props.product;
+    this.props.addProductToCart(variant.id, variant.name, variant.image, variant.variant.options_text, variant.variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.id);
+  };
+
   render(){
-    const { classes, product, variants} = this.props;
+    const { classes, product, variants } = this.props;
 
     let variantNames = [];
     variants.map(variant =>
-      variantNames.push({variant: variant.variant.options_text})
+      variantNames.push({label: variant.variant.options_text, value: variant.id})
     );
 
     let variantHtml;
     if (variants.length === 0)
       variantHtml = <div id="variants"></div>;
     else
-      variantHtml = <div style={{width: '100%'}}><VariantSelector variants={variantNames}/></div>;
+      variantHtml = <div style={{width: '100%'}}>
+                      <VariantSelector variantNames={variantNames} onVariantClickHandler={this.onVariantClickHandler} variant={this.state.id}/>
+                    </div>;
+
+    let currentVar = variants.find( variant => {
+      return variant.id === this.state.id;
+    });
+    if (!currentVar)
+      currentVar = product;
+    let displayPrice;
+    if(currentVar.variant.price === currentVar.variant.promotion_price){
+      displayPrice = <div><strong> $ {currentVar.variant.price}</strong></div>;
+    }
+    else{
+      displayPrice = <div><strike>$ {currentVar.variant.price}</strike><strong> $ {currentVar.variant.promotion_price}</strong></div>;
+    }
+
 
     if (product.variant.is_master)
       return (
         <MuiThemeProvider theme={theme}>
-          <Header product={product}/>
+          <Header product={product} price={displayPrice}/>
           <div className={classes.root}>
             <Grid container spacing={24}>
               <Grid item xs={12} sm={5}>
@@ -94,17 +142,17 @@ class ProductView extends React.Component {
               <Grid item xs={12} sm={7}>
                 {variantHtml}
                 <div style={{width: '100%'}}>
-                  <QuantitySelector />
+                  <QuantitySelector onQuantityClickHandler={this.onQuantityClickHandler} qty={this.state.qty}/>
                 </div>
                 <div style={{width: '100%'}}>
-                  <Button raised className={classes.button}>
-                    Add to Cart
-                </Button>
+                  <Button raised className={classes.button} onClick={this.onAddToCartHandler}>
+                    Agregar al Carro
+                  </Button>
                 </div>
                 <div style={{width: '100%'}}>
                   <Paper className={classes.description} elevation={4}>
                     <Typography component="p">
-                      Paper can be used to build surface or other elements for your application. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                      {product.description}
                     </Typography>
                   </Paper>
                 </div>
@@ -121,6 +169,7 @@ class ProductView extends React.Component {
 
 ProductView.propTypes = {
   addProduct: PropTypes.func,
+  addProductToCart: PropTypes.func,
   classes: PropTypes.object.isRequired,
   products: PropTypes.array
 };
@@ -128,14 +177,15 @@ ProductView.propTypes = {
 const mapStateToProps = (state, props) => {
   return {
     product: productSelector(state, props.match.params.id),
-    variants: variantsProductsSelector(state, props.match.params.id)
+    variants: variantsProductsSelector(state, props.match.params.id),
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addProduct: (id, name, price, imgUrl, variants, categories) => dispatch(addProduct(id, name, price, imgUrl, variants, categories)),
-  }
+    addProductToCart: (local_id, name, img, variant, price, quantity, product_id) => dispatch(addProductToCart(local_id, name, img, variant, price, quantity, product_id))
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProductView));

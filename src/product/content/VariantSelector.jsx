@@ -16,18 +16,9 @@ const styles = theme => ({
 });
 
 class VariantSelector extends React.Component {
-  state = {
-    variant: '',
-  };
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
 
   render() {
-    const { classes, variants } = this.props;
+    const { classes, variantNames, variant, onVariantClickHandler } = this.props;
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
@@ -36,8 +27,8 @@ class VariantSelector extends React.Component {
           select
           label="Opción"
           className={classes.textField}
-          value={this.state.variant}
-          onChange={this.handleChange('variant')}
+          value={variant}
+          onChange={onVariantClickHandler()}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -45,9 +36,9 @@ class VariantSelector extends React.Component {
           }}
           margin="normal"
         >
-          {variants.map(option => (
-            <MenuItem key={option.variant} value={option.variant}>
-              {option.variant}
+          {variantNames.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
             </MenuItem>
           ))}
         </TextField>

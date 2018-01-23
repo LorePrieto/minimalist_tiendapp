@@ -16,28 +16,16 @@ const styles = theme => ({
 
 
 class QuantitySelector extends React.Component {
-  state = {
-    qty: '',
-  };
-
-  handleChange = name => event => {
-    if (event.target.value > 0) {
-      this.setState({
-          [name]: event.target.value,
-      });
-    }
-  };
-
   render() {
-    const { classes } = this.props;
+    const { classes, qty, onQuantityClickHandler } = this.props;
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="number"
           label="Quantity"
-          value={this.state.qty}
-          onChange={this.handleChange('qty')}
+          value={qty}
+          onChange={onQuantityClickHandler()}
           type="number"
           className={classes.textField}
           InputLabelProps={{
