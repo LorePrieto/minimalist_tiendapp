@@ -64,6 +64,10 @@ const styles = theme => ({
       height: '100%',
     },
   },
+  logo: {
+    height: '20%',
+    padding: 0,
+  },
   drawerCart: {
     width: 300,
     borderRight: 'none',
@@ -157,7 +161,7 @@ class Layout extends React.Component {
     const navbar = (
       <div>
         <div className={classes.drawerHeader} />
-        <List>{logoListItems}</List>
+        <List className={classes.logo}>{logoListItems}</List>
         <Divider />
           <div>
             <br/>
