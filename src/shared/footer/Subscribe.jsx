@@ -37,6 +37,21 @@ class Subscribe extends React.Component {
     email: '',
   };
 
+  subscribeMe = () => event => {
+    fetch('http://tutienda.lvh.me:4000/api/store_mailing_list_items.json', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({
+        email: this.state.email
+      }),
+    });
+    this.setState({
+      ['email']: ''
+    });
+  };
+
   handleChange = email => event => {
     this.setState({
       [email]: event.target.value,
@@ -56,7 +71,7 @@ class Subscribe extends React.Component {
           onChange={this.handleChange('email')}
           margin="normal"
         />
-        <Button raised className={classes.button}>
+      <Button raised className={classes.button} onClick={this.subscribeMe()}>
           <SendIcon className={classes.icon}/>
         </Button>
       </MuiThemeProvider>
