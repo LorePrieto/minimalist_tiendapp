@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
@@ -64,16 +65,16 @@ class CartItem extends React.Component {
   }
 
   onQuantityClickHandler = () => event => {
-    const product = this.props.products.find(product => product.id === this.props.cartItem.local_id);
-    if (((product.variant.total_on_hand + this.props.cartItem.quantity) >= event.target.value || product.variant.is_backorderable) && (event.target.value > 0 || event.target.value === '')){
+    const product = this.props.products.find(product => product.variant_id === this.props.cartItem.variant_id);
+    if (((product.total_on_hand + this.props.cartItem.quantity) >= event.target.value || product.is_backorderable) && (event.target.value > 0 || event.target.value === '')){
       this.setState({
         qty: event.target.value,
       });
       if (event.target.value){
-        this.props.changeStock(this.props.cartItem.local_id, (parseInt(event.target.value,10) - this.props.cartItem.quantity));
-        this.props.changeItemQuantity(this.props.cartItem.local_id, this.props.cartItem.price, parseInt(event.target.value,10), this.props.cartItem.product_id);
+        this.props.changeStock(this.props.cartItem.variant_id, (parseInt(event.target.value,10) - this.props.cartItem.quantity));
+        this.props.changeItemQuantity(this.props.cartItem.variant_id, this.props.cartItem.price, parseInt(event.target.value,10), this.props.cartItem.product_id);
       }
-    }else if (!((product.variant.total_on_hand + this.props.cartItem.quantity) >= event.target.value || product.variant.is_backorderable)) {
+    }else if (!((product.total_on_hand + this.props.cartItem.quantity) >= event.target.value || product.is_backorderable)) {
       this.setState({
         openSnack: true,
       })
@@ -81,8 +82,8 @@ class CartItem extends React.Component {
   }
 
   onDeleteClickHandler = () => event => {
-    this.props.changeStock(this.props.cartItem.local_id, -1*this.props.cartItem.quantity);
-    this.props.removeItemFromCart(this.props.cartItem.local_id, this.props.cartItem.price);
+    this.props.changeStock(this.props.cartItem.variant_id, -1*this.props.cartItem.quantity);
+    this.props.removeItemFromCart(this.props.cartItem.variant_id, this.props.cartItem.price);
   }
 
   handleSnackBarClose = (ev, reason) => {
@@ -92,20 +93,20 @@ class CartItem extends React.Component {
 
   render() {
     const { classes, cartItem } = this.props;
-    const product = this.props.products.find(product => product.id === this.props.cartItem.local_id);
+    const product = this.props.products.find(product => product.variant_id === this.props.cartItem.variant_id);
 
     let stockText;
-    if(product.variant.total_on_hand < 0)
+    if(product.total_on_hand < 0)
       stockText = 'Algunos de estos productos no se encuentran en stock. Serán enviados apenas estén listos'
     else
       stockText = 'Todos los productos están disponibles y serán enviados a la brevedad.'
 
     return (
-      <div key={cartItem.local_id + '-div'}style={{width: '100%'}}>
-        <Grid item key={cartItem.local_id} xs={12} className={classes.product}>
+      <div key={cartItem.variant_id + '-div'}style={{width: '100%'}}>
+        <Grid item key={cartItem.variant_id} xs={12} className={classes.product}>
           <Grid container justify="center" spacing={16}>
             <Grid item xs={8} >
-              <a href={'/product/'+cartItem.product_id} style={{textDecoration: 'none'}}>
+              <Link to={'/product/'+cartItem.product_id} style={{textDecoration: 'none'}}>
                 <Card className={classes.card}>
                   <div className={classes.details}>
                     <CardMedia
@@ -123,7 +124,7 @@ class CartItem extends React.Component {
                     </CardContent>
                   </div>
                 </Card>
-              </a>
+              </Link>
             </Grid>
             <Grid item xs={3} style={{displayFelx:"column"}}>
               <br/>
@@ -179,9 +180,9 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeItemQuantity: (local_id, price, quantity) => dispatch(changeItemQuantity(local_id, price, quantity)),
-    removeItemFromCart: (local_id, price) => dispatch(removeItemFromCart(local_id, price)),
-    changeStock: (local_id, quantity) => dispatch(changeStock(local_id, quantity)),
+    changeItemQuantity: (variant_id, price, quantity) => dispatch(changeItemQuantity(variant_id, price, quantity)),
+    removeItemFromCart: (variant_id, price) => dispatch(removeItemFromCart(variant_id, price)),
+    changeStock: (variant_id, quantity) => dispatch(changeStock(variant_id, quantity)),
   };
 }
 

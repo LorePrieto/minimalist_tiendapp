@@ -8,19 +8,25 @@ import Typography from 'material-ui/Typography';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import List from 'material-ui/List';
+import { Link } from 'react-router-dom';
+import HomeIcon from 'material-ui-icons/Home';
+import LoyaltyIcon from 'material-ui-icons/Loyalty';
+import ToysIcon from 'material-ui-icons/Toys';
+import AccountBoxIcon from 'material-ui-icons/AccountBox';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
 import CloseIcon from 'material-ui-icons/Close';
-import { logoListItems, OtherListItems } from './tileData.js';
 import ProductsListItems from './cart/cartData.jsx';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 
 // Redux
 import {connect} from 'react-redux';
+//import { loginUser } from '../actions/user.js';
 import {cartSelector, getSubtotal} from '../selectors/cart.js';
+import { userSelector } from '../selectors/user.js';
 
 
 const drawerWidth = 260;
@@ -139,6 +145,10 @@ class Layout extends React.Component {
     notice: false,
   };
 
+  // componentDidMount(){
+  //   this.props.loginUser("susu@uc.cl", "hZBhm6y1Ffu18GqBCCxT5a4exeU6szr8SEtYojwSUY6IN/MtSZ2j5dZDSjVf\nJopLDXm2DYsMLq3kyIuaPkIOzTZL7c0wNx/cYih53nI9GPcLAAE8SShpdAC4\nZ60GSZF80VF3lwRMh5QJt3Tw7FSAp+P/ROBEqgxGk3+hcEYJLWw=");
+  // };
+
   toggleDrawer = (side, open) => () => {
     this.setState({
       [side]: open,
@@ -157,6 +167,59 @@ class Layout extends React.Component {
       carro = 'Carro ('+cart.length+')'
     else
       carro  = 'Carro'
+
+      const OtherListItems = (
+        <div>
+          <br/>
+          <Link to="/" style={{textDecoration: 'none'}}>
+          <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+              <Typography type="caption" gutterBottom align="center">
+                Inicio
+              </Typography>
+          </ListItem>
+        </Link>
+        <Link to="/catalog" style={{textDecoration: 'none'}}>
+          <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+            <ListItemIcon>
+              <LoyaltyIcon />
+            </ListItemIcon>
+              <Typography type="caption" gutterBottom align="center">
+                Catálogo
+              </Typography>
+          </ListItem>
+        </Link>
+        <Link to="/static" style={{textDecoration: 'none'}}>
+          <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+            <ListItemIcon>
+              <ToysIcon />
+            </ListItemIcon>
+              <Typography type="caption" gutterBottom align="center">
+                Página Estática
+              </Typography>
+          </ListItem>
+        </Link>
+        <Link to="/account" style={{textDecoration: 'none'}}>
+          <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+            <ListItemIcon>
+              <AccountBoxIcon />
+            </ListItemIcon>
+              <Typography type="caption" gutterBottom align="center">
+                Mi cuenta
+              </Typography>
+          </ListItem>
+        </Link>
+          <br/>
+        </div>
+      );
+
+      const logoListItems = (
+        <div>
+          <img src={"/images/logo.png"} alt="logo" style={{width: '90%', display: 'block', marginLeft: 'auto', marginRight: 'auto',}}/>
+        </div>
+      );
 
     const navbar = (
       <div>
@@ -278,7 +341,6 @@ class Layout extends React.Component {
 }
 
 Layout.propTypes = {
-  addProductToCart: PropTypes.func,
   cart:  PropTypes.array,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
@@ -288,12 +350,13 @@ const mapStateToProps = (state, props) => {
   return {
     cart: cartSelector(state),
     subtotal: getSubtotal(state),
+    user: userSelector(state),
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    //loginUser: (email, password) => dispatch(loginUser(email, password)),
   };
 }
 

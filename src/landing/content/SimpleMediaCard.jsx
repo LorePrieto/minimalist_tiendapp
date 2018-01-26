@@ -31,12 +31,12 @@ const styles = {
 function SimpleMediaCard(props) {
   var product = props.data
   const { classes } = props;
-  
+
   let price;
-  if(product.variant.price === product.variant.promotion_price)
-    price = <div><strong> $ {product.variant.price}</strong></div>;
+  if(product.price === product.promotion_price)
+    price = <div><strong> $ {product.price}</strong></div>;
   else
-    price = <div><strike>$ {product.variant.price}</strike><strong> $ {product.variant.promotion_price}</strong></div>;
+    price = <div><strike>$ {product.price}</strike><strong> $ {product.promotion_price}</strong></div>;
 
   return (
     <div>

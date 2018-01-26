@@ -9,32 +9,32 @@ const cart = (state=[], action) => {
   const newState = [...state];
   switch (type) {
       case ADD_ITEM_TO_CART: {
-        const {local_id, name, img, variant, price, quantity, product_id} = action;
+        const {variant_id, name, img, variant, price, quantity, product_id} = action;
         let exists = false;
         newState.forEach(entry => {
-          if (entry.local_id === local_id && entry.price === price){
+          if (entry.variant_id === variant_id && entry.price === price){
             entry.quantity = entry.quantity + quantity;
             exists = true;
           }
         });
         if (!exists){
-          newState.push({local_id, name, img, variant, price, quantity, product_id});
+          newState.push({variant_id, name, img, variant, price, quantity, product_id});
         }
         return newState;
       }
       case REMOVE_ITEM_FROM_CART: {
-        const { local_id, price } = action;
+        const { variant_id, price } = action;
         newState.forEach((item, index, object) => {
-          if (item.local_id === local_id && item.price === price){
+          if (item.variant_id === variant_id && item.price === price){
             object.splice(index, 1);
           }
         });
         return newState;
       }
       case CHANGE_ITEM_QUANTITY: {
-        const {local_id, price, quantity} = action;
+        const {variant_id, price, quantity} = action;
         newState.forEach(entry => {
-          if (entry.local_id === local_id && entry.price === price){
+          if (entry.variant_id === variant_id && entry.price === price){
             entry.quantity = quantity;
           }
         });

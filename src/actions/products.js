@@ -1,8 +1,9 @@
 export const ADD_PRODUCT = 'ADD_PRODUCT';
-export const REMOVE_STOCK = 'REMOVE_STOCK';
+export const CHANGE_STOCK = 'CHANGE_STOCK';
 
 export const addProduct = (
   id,
+  variant_id,
   product_id,
   name,
   description,
@@ -10,10 +11,10 @@ export const addProduct = (
   available,
   taxon_ids,
   taxon_names,
+  has_variants,
   is_master,
   price,
   promotion_price,
-  variant_id,
   total_on_hand,
   options_text,
   in_stock,
@@ -22,6 +23,7 @@ export const addProduct = (
   return {
     type: ADD_PRODUCT,
     id,
+    variant_id,
     product_id,
     name,
     description,
@@ -29,10 +31,10 @@ export const addProduct = (
     available,
     taxon_ids,
     taxon_names,
+    has_variants,
     is_master,
     price,
     promotion_price,
-    variant_id,
     total_on_hand,
     options_text,
     in_stock,
@@ -40,10 +42,10 @@ export const addProduct = (
   };
 };
 
-export const changeStock = (local_id, quantity) =>{
+export const changeStock = (variant_id, quantity) =>{
   return{
-    type: REMOVE_STOCK,
-    local_id,
+    type: CHANGE_STOCK,
+    variant_id,
     quantity
   }
 }
@@ -61,6 +63,7 @@ export const getAllProducts = () => {
        products.map( product => (
          dispatch(addProduct(
            cont++,
+           product.master.id,
            product.id,
            product.name,
            product.plain_description === null ? "" : product.plain_description,
@@ -68,10 +71,10 @@ export const getAllProducts = () => {
            product.available_on <= Date(),
            product.taxon_ids,
            product.taxon_names,
+           product.has_variants,
            true,
            parseInt(product.master.price, 10),
            product.master.promo_price === null ? parseInt(product.master.price, 10) : parseInt(product.master.promo_price, 10),
-           product.master.id,
            product.master.total_on_hand,
            product.master.options_text,
            product.master.in_stock,
@@ -82,6 +85,7 @@ export const getAllProducts = () => {
          product.variants.map(variant =>
            dispatch(addProduct(
              cont++,
+             variant.id,
              product.id,
              product.name,
              product.plain_description,
@@ -89,10 +93,10 @@ export const getAllProducts = () => {
              product.available_on <= Date(),
              product.taxon_ids,
              product.taxon_names,
+             true,
              false,
              parseInt(variant.price, 10),
              variant.promo_price === null ? parseInt(variant.price, 10) : parseInt(variant.promo_price, 10),
-             variant.id,
              variant.total_on_hand,
              variant.options_text,
              variant.in_stock,

@@ -2,10 +2,10 @@ export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
 export const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
 export const CHANGE_ITEM_QUANTITY = 'CHANGE_ITEM_QUANTITY';
 
-export const addProductToCart = (local_id, name, img, variant, price, quantity, product_id) => {
+export const addProductToCart = (variant_id, name, img, variant, price, quantity, product_id) => {
   return {
     type: ADD_ITEM_TO_CART,
-    local_id,
+    variant_id,
     name,
     img,
     variant,
@@ -15,18 +15,18 @@ export const addProductToCart = (local_id, name, img, variant, price, quantity, 
   };
 };
 
-export const removeItemFromCart = (local_id, price) => {
+export const removeItemFromCart = (variant_id, price) => {
   return {
     type: REMOVE_ITEM_FROM_CART,
-    local_id,
+    variant_id,
     price,
   };
 };
 
-export const changeItemQuantity = (local_id, price, quantity) => {
+export const changeItemQuantity = (variant_id, price, quantity) => {
   return {
     type: CHANGE_ITEM_QUANTITY,
-    local_id,
+    variant_id,
     price,
     quantity
   };

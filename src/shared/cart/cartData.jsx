@@ -15,7 +15,7 @@ class ProductsListItems extends React.Component {
     return (
       <Grid container spacing={0}>
         {cart.map(product => (
-          <CartItem cartItem={product} key={'cart'+product.local_id}/>
+          <CartItem cartItem={product} key={'cart'+product.variant_id}/>
         ))}
       </Grid>
     );
