@@ -17,7 +17,7 @@ class App extends Component {
         <Reboot />
         <Switch>
           <Route exact path="/" component={Landing}/>
-          <Route path="/product/:id" component={Product}/>
+          <Route path="/product/:variant_id" component={Product}/>
           <Route path="/catalog" component={Catalog}/>
           <Route path="/account" component={Account}/>
           <Route path="/static" component={Static}/>

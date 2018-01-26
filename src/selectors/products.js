@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 export const productsSelector = (state) => state.products;
 
-export const productSelector = (state, id) => state.products[id];
+export const productSelector = (state, id) => state.products.filter(product => product.variant_id === parseInt(id, 10))[0];
 
 const is_master = (product) => {
   return product.is_master
