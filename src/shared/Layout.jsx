@@ -67,7 +67,7 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       position: 'relative',
-      height: '100%',
+      overflowY: 'scroll',
     },
   },
   logo: {
@@ -160,7 +160,7 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, theme, children, cart } = this.props;
+    const { classes, children, cart } = this.props;
 
     let carro;
     if (cart.length > 0)
@@ -274,7 +274,7 @@ class Layout extends React.Component {
           <Hidden mdUp>
             <Drawer
               type="temporary"
-              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              anchor='left'
               open={this.state.mobileOpen}
               classes={{
                 paper: classes.drawerPaper,
@@ -343,7 +343,6 @@ class Layout extends React.Component {
 Layout.propTypes = {
   cart:  PropTypes.array,
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
