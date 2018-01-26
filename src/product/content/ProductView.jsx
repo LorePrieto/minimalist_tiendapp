@@ -51,9 +51,14 @@ const styles = theme => ({
     paddingTop: 16,
     paddingBottom: 16,
     marginTop: theme.spacing.unit * 3,
-    width: '90%',
+    width: '100%',
     boxShadow: 'none',
   }),
+  descriptionText: {
+    textAlign: 'justify',
+    color: 'rgba(0,0,0,0.54)',
+    fontSize: '1em',
+  },
   stockText:{
     color: 'rgba(0,0,0,0.54)',
     fontSize: '0.7em',
@@ -175,7 +180,6 @@ class ProductView extends React.Component {
         if (product.is_master)
           return (
             <MuiThemeProvider theme={theme}>
-              <Header product={product} price={displayPrice}/>
               <div className={classes.root}>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={5}>
@@ -188,6 +192,7 @@ class ProductView extends React.Component {
                     </Card>
                   </Grid>
                   <Grid item xs={12} sm={7}>
+                    <Header product={product} price={displayPrice}/>
                     {variantHtml}
                     <div style={{width: '100%'}}>
                       <QuantitySelector
@@ -207,15 +212,15 @@ class ProductView extends React.Component {
                         {addCartText}
                       </Button>
                     </div>
-                    <div style={{width: '100%'}}>
-                      <Paper className={classes.description} elevation={4}>
-                        <Typography component="p">
-                          {product.description}
-                        </Typography>
-                      </Paper>
-                    </div>
                   </Grid>
                 </Grid>
+                <div style={{width: '90%', display: 'flex', margin: '0 auto'}}>
+                  <Paper className={classes.description} elevation={4}>
+                    <Typography component="p" className={classes.descriptionText}>
+                      {product.description}
+                    </Typography>
+                  </Paper>
+                </div>
               </div>
               <Snackbar
                 anchorOrigin={{
