@@ -92,7 +92,7 @@ class CartItem extends React.Component {
   };
 
   render() {
-    const { classes, cartItem } = this.props;
+    const { classes, cartItem, onLinkClick } = this.props;
     const product = this.props.products.find(product => product.variant_id === this.props.cartItem.variant_id);
 
     let stockText;
@@ -106,7 +106,7 @@ class CartItem extends React.Component {
         <Grid item key={cartItem.variant_id} xs={12} className={classes.product}>
           <Grid container justify="center" spacing={16}>
             <Grid item xs={8} >
-              <Link to={'/product/'+cartItem.product_id} style={{textDecoration: 'none'}}>
+              <Link to={'/product/'+cartItem.product_id} style={{textDecoration: 'none'}} onClick={onLinkClick()}>
                 <Card className={classes.card}>
                   <div className={classes.details}>
                     <CardMedia

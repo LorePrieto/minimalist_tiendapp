@@ -139,11 +139,15 @@ const styles = theme => ({
 });
 
 class Layout extends React.Component {
-  state = {
-    mobileOpen: false,
-    right: false,
-    notice: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      mobileOpen: false,
+      right: false,
+      notice: false,
+    };
+    this.onLinkClick =  this.onLinkClick.bind(this);
+  }
 
   // componentDidMount(){
   //   this.props.loginUser("susu@uc.cl", "hZBhm6y1Ffu18GqBCCxT5a4exeU6szr8SEtYojwSUY6IN/MtSZ2j5dZDSjVf\nJopLDXm2DYsMLq3kyIuaPkIOzTZL7c0wNx/cYih53nI9GPcLAAE8SShpdAC4\nZ60GSZF80VF3lwRMh5QJt3Tw7FSAp+P/ROBEqgxGk3+hcEYJLWw=");
@@ -157,6 +161,12 @@ class Layout extends React.Component {
 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
+
+  onLinkClick = () => event => {
+    this.setState({
+      right: false
+    });
   };
 
   render() {
@@ -319,7 +329,7 @@ class Layout extends React.Component {
               </Typography>
               <Divider style={{margin: 10}} />
               <div style={{width: '100%'}}>
-                <ProductsListItems />
+                <ProductsListItems onLinkClick={this.onLinkClick}/>
               </div>
               <div style={{width: '100%'}}>
                 <Typography type="headline" component="h3" className={classes.cartSubtotal}>
