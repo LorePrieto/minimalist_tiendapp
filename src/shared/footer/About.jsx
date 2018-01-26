@@ -33,6 +33,7 @@ function About(props) {
           </Typography>
           <Typography component="p" className={classes.typography}>
             Paper can be used to build surface or other elements for your application.
+            Paper can be used to build surface or other elements for your application.
           </Typography>
         </Paper>
       </Grid>

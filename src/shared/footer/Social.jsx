@@ -5,10 +5,11 @@ import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
-import Facebook from './Facebook.jsx'
-import Twitter from './Twitter.jsx'
-import Instagram from './Instagram.jsx'
-import Pinterest from './Pinterest.jsx'
+import Facebook from './Facebook.jsx';
+import Twitter from './Twitter.jsx';
+import Instagram from './Instagram.jsx';
+import Pinterest from './Pinterest.jsx';
+import Subscribe from './Subscribe.jsx';
 
 const styles = theme => ({
   paper: {
@@ -29,6 +30,9 @@ const styles = theme => ({
     width: 22,
     height: 22,
   },
+  subscribe: {
+    
+  },
 });
 
 
@@ -41,6 +45,7 @@ function Social(props) {
           <Typography type="headline" component="h3" className={classes.typography}>
             Síguenos
           </Typography>
+          <Subscribe className={classes.subscribe}/>
           <div className={classes.controls}>
             <IconButton
               aria-label="github"

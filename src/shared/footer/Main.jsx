@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import About from './About.jsx';
 import Social from './Social.jsx';
+import TiendApp from './TiendApp.jsx';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
@@ -22,6 +23,7 @@ function Main(props) {
       <Grid container spacing={24}>
         <Route path={`${match.path}`} component={About}/>
         <Route path={`${match.path}`} component={Social}/>
+        <Route path={`${match.path}`} component={TiendApp}/>
       </Grid>
     </div>
   );
