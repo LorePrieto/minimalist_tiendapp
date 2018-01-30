@@ -64,6 +64,8 @@ function Header(props) {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
+  product: PropTypes.object,
+  price: PropTypes.element,
 };
 
 export default withStyles(styles)(Header);

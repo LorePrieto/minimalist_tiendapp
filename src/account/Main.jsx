@@ -11,11 +11,11 @@ import {userSelector} from '../selectors/user';
 class Main extends React.Component {
   render() {
     const { user } = this.props;
-    
+
     if (user) {
       return (
         <Layout>
-          <Route path={`${this.props.match.path}`} component={Content}/>
+          <Route component={Content}/>
         </Layout>
       );
     }else {
@@ -29,6 +29,7 @@ class Main extends React.Component {
 Main.propTypes = {
   user: PropTypes.object,
 };
+
 const mapStateToProps = (state) => {
   return {
     user: userSelector(state)

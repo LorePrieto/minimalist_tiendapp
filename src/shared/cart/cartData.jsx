@@ -23,7 +23,8 @@ class ProductsListItems extends React.Component {
 }
 
 ProductsListItems.propTypes = {
-  cart: PropTypes.array
+  cart: PropTypes.array,
+  onLinkClick: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {

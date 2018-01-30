@@ -58,7 +58,7 @@ class CartItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      qty: this.props.cartItem.quantity,
+      qty: parseInt(this.props.cartItem.quantity,10),
       openSnack: false
     };
     this.onQuantityClickHandler =  this.onQuantityClickHandler.bind(this);
@@ -69,7 +69,7 @@ class CartItem extends React.Component {
     const product = this.props.products.find(product => product.variant_id === this.props.cartItem.variant_id);
     if (((product.total_on_hand + this.props.cartItem.quantity) >= event.target.value || product.is_backorderable) && (event.target.value > 0 || event.target.value === '')){
       this.setState({
-        qty: event.target.value,
+        qty: parseInt(event.target.value,10),
       });
       if (event.target.value){
         this.props.changeStock(this.props.cartItem.variant_id, (parseInt(event.target.value,10) - this.props.cartItem.quantity));
@@ -177,6 +177,9 @@ CartItem.propTypes = {
   changeItemQuantity: PropTypes.func,
   removeItemFromCart: PropTypes.func,
   changeStock: PropTypes.func,
+  cartItem: PropTypes.object,
+  onLinkClick: PropTypes.func,
+  products: PropTypes.array,
 };
 
 const mapStateToProps = (state, props) => {

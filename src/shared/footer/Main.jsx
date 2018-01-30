@@ -15,8 +15,7 @@ const styles = theme => ({
 });
 
 function Main(props) {
-  const { classes } = props;
-  const { match } = props;
+  const { classes, match } = props;
 
   return (
     <div id="footer" className={classes.root}>

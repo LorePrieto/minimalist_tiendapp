@@ -14,7 +14,7 @@ class Main extends React.Component {
   render() {
     return (
       <Layout>
-        <Route path={`${this.props.match.path}`} component={Content}/>
+        <Route component={Content}/>
       </Layout>
     );
   }

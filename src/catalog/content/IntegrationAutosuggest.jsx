@@ -193,7 +193,8 @@ class IntegrationAutosuggest extends React.Component {
 IntegrationAutosuggest.propTypes = {
   addProduct: PropTypes.func,
   classes: PropTypes.object.isRequired,
-  products: PropTypes.array
+  products: PropTypes.array,
+  onChangeProduct: PropTypes.func
 };
 
 const mapStateToProps = (state) => {

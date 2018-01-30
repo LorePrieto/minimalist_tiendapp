@@ -29,8 +29,7 @@ const styles = {
 };
 
 function SimpleMediaCard(props) {
-  var product = props.data
-  const { classes } = props;
+  const { product, classes } = props;
   let price;
 
   if(product.price === product.promotion_price)
@@ -61,6 +60,7 @@ function SimpleMediaCard(props) {
 
 SimpleMediaCard.propTypes = {
   classes: PropTypes.object.isRequired,
+  product: PropTypes.object,
 };
 
 export default withStyles(styles)(SimpleMediaCard);

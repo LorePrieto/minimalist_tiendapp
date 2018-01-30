@@ -85,7 +85,7 @@ class ProductView extends React.Component {
 
   componentWillReceiveProps() {
     this.setState({
-      id: this.props.variants.length > 0 ? this.props.variants[0].id : this.props.match.params.product_id,
+      id: this.props.variants.length > 0 ? this.props.variants[0].id : parseInt(this.props.match.params.product_id, 10),
     });
   }
 
@@ -106,7 +106,7 @@ class ProductView extends React.Component {
 
   onVariantClickHandler = () => event => {
     this.setState({
-      id: event.target.value,
+      id: parseInt(event.target.value, 10),
       qty: '1',
     });
   }

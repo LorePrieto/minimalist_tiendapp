@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 import HomeIcon from 'material-ui-icons/Home';
 import LoyaltyIcon from 'material-ui-icons/Loyalty';
 import ToysIcon from 'material-ui-icons/Toys';
-import AccountBoxIcon from 'material-ui-icons/AccountBox';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
@@ -21,6 +20,7 @@ import CloseIcon from 'material-ui-icons/Close';
 import ProductsListItems from './cart/cartData.jsx';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
+import Login from './Login';
 
 // Redux
 import {connect} from 'react-redux';
@@ -145,8 +145,15 @@ class Layout extends React.Component {
       mobileOpen: false,
       right: false,
       notice: false,
+      openModal: false,
+      email: '',
+      password: '',
+
     };
     this.onLinkClick =  this.onLinkClick.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   // componentDidMount(){
@@ -156,6 +163,26 @@ class Layout extends React.Component {
   toggleDrawer = (side, open) => () => {
     this.setState({
       [side]: open,
+    });
+  };
+
+  handleModalOpen = () => {
+    this.setState({
+      openModal: true
+    });
+  };
+
+  handleModalClose = () => event => {
+   this.setState({
+     openModal: false,
+     password: '',
+     email: ''
+   });
+  };
+
+  handleChange = prop => event => {
+    this.setState({
+      [prop]: event.target.value
     });
   };
 
@@ -170,19 +197,13 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, children, cart, user } = this.props;
+    const { classes, children, cart } = this.props;
 
     let carro;
     if (cart.length > 0)
       carro = 'Carro ('+cart.length+')'
     else
       carro  = 'Carro'
-
-    let account;
-    if (user)
-      account = 'Mi cuenta'
-    else
-      account = 'Login'
 
     const OtherListItems = (
       <div>
@@ -217,17 +238,16 @@ class Layout extends React.Component {
             </Typography>
         </ListItem>
       </Link>
-      <Link to="/account" style={{textDecoration: 'none'}}>
-        <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
-          <ListItemIcon>
-            <AccountBoxIcon />
-          </ListItemIcon>
-            <Typography type="caption" gutterBottom align="center">
-              {account}
-            </Typography>
-        </ListItem>
-      </Link>
-        <br/>
+      <Login
+        open={this.state.openModal}
+        email={this.state.email}
+        password={this.state.password}
+        handleChange={this.handleChange}
+        loggedIn={ this.props.user ? true : false}
+        handleModalClose={this.handleModalClose}
+        handleModalOpen={this.handleModalOpen}
+      />
+      <br/>
       </div>
     );
 
