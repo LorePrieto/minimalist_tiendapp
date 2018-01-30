@@ -14,6 +14,7 @@ const user = (state=[], action) => {
         return newState;
       }
       case LOGOUT_USER: {
+        newState.pop();
         return newState;
       }
       default:{

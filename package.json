@@ -5,7 +5,7 @@
   "dependencies": {
     "autosuggest-highlight": "^3.1.1",
     "classnames": "^2.2.5",
-    "material-ui": "^1.0.0-beta.27",
+    "material-ui": "^1.0.0-beta.31",
     "material-ui-icons": "^1.0.0-beta.17",
     "react": "^16.2.0",
     "react-autosuggest": "^9.3.2",

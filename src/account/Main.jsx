@@ -1,28 +1,44 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import Content from './content/Main.jsx';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import Layout from './../shared/Layout.jsx'
 
-const styles = theme => ({
-
-});
+// Redux
+import {connect} from 'react-redux';
+import {userSelector} from '../selectors/user';
 
 class Main extends React.Component {
-
   render() {
-    return (
-      <Layout>
-        <Route path={`${this.props.match.path}`} component={Content}/>
-      </Layout>
-    );
+    const { user } = this.props;
+    
+    if (user) {
+      return (
+        <Layout>
+          <Route path={`${this.props.match.path}`} component={Content}/>
+        </Layout>
+      );
+    }else {
+      return (
+        <Redirect to='/' />
+      );
+    }
   }
 }
 
 Main.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
+  user: PropTypes.object,
 };
+const mapStateToProps = (state) => {
+  return {
+    user: userSelector(state)
+  };
+}
 
-export default withStyles(styles, { withTheme: true })(Main);
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

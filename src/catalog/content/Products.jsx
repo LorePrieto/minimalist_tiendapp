@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import IntegrationAutosuggest from './IntegrationAutosuggest.jsx';
-import Table, {TableBody, TableFooter, TableRow, TablePagination} from 'material-ui/Table';
+import Table, {TableBody, TableFooter, TableRow, TablePagination, TableCell} from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
 import LastPageIcon from 'material-ui-icons/LastPage';
 import FirstPageIcon from 'material-ui-icons/FirstPage';
@@ -182,15 +182,19 @@ class Products extends React.Component {
         </Paper>
         <Table className={classes.table}>
           <TableBody>
-            <Grid container spacing={40} className={classes.grid}>
-              {filteredProducts.slice(page*rowsPerPage, page*rowsPerPage + rowsPerPage).map(product => (
-                <Grid item key={product.name+product.id} xs={12} md={4}>
-                  <Link to={'/product/'+product.variant_id} style={{textDecoration: 'none'}}>
-                    <SimpleMediaCard data= {product} key={product.id} />
-                  </Link>
+            <TableRow>
+              <TableCell>
+                <Grid container spacing={40} className={classes.grid}>
+                  {filteredProducts.slice(page*rowsPerPage, page*rowsPerPage + rowsPerPage).map(product => (
+                    <Grid item key={product.name+product.id} xs={12} md={4}>
+                      <Link to={'/product/'+product.product_id} style={{textDecoration: 'none'}}>
+                        <SimpleMediaCard data= {product} key={product.id} />
+                      </Link>
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
+              </TableCell>
+            </TableRow>
           </TableBody>
           <TableFooter>
             <TableRow>

@@ -48,7 +48,7 @@ class Subscribe extends React.Component {
       }),
     });
     this.setState({
-      ['email']: ''
+      email: ''
     });
   };
 

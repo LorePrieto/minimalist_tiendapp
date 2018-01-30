@@ -24,7 +24,7 @@ import Paper from 'material-ui/Paper';
 
 // Redux
 import {connect} from 'react-redux';
-//import { loginUser } from '../actions/user.js';
+import { loginUser } from '../actions/user.js';
 import {cartSelector, getSubtotal} from '../selectors/cart.js';
 import { userSelector } from '../selectors/user.js';
 
@@ -170,7 +170,7 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, children, cart } = this.props;
+    const { classes, children, cart, user } = this.props;
 
     let carro;
     if (cart.length > 0)
@@ -178,52 +178,58 @@ class Layout extends React.Component {
     else
       carro  = 'Carro'
 
-      const OtherListItems = (
-        <div>
-          <br/>
-          <Link to="/" style={{textDecoration: 'none'}}>
-          <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-              <Typography type="caption" gutterBottom align="center">
-                Inicio
-              </Typography>
-          </ListItem>
-        </Link>
-        <Link to="/catalog" style={{textDecoration: 'none'}}>
-          <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
-            <ListItemIcon>
-              <LoyaltyIcon />
-            </ListItemIcon>
-              <Typography type="caption" gutterBottom align="center">
-                Catálogo
-              </Typography>
-          </ListItem>
-        </Link>
-        <Link to="/static" style={{textDecoration: 'none'}}>
-          <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
-            <ListItemIcon>
-              <ToysIcon />
-            </ListItemIcon>
-              <Typography type="caption" gutterBottom align="center">
-                Página Estática
-              </Typography>
-          </ListItem>
-        </Link>
-        <Link to="/account" style={{textDecoration: 'none'}}>
-          <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
-            <ListItemIcon>
-              <AccountBoxIcon />
-            </ListItemIcon>
-              <Typography type="caption" gutterBottom align="center">
-                Mi cuenta
-              </Typography>
-          </ListItem>
-        </Link>
-          <br/>
-        </div>
-      );
+    let account;
+    if (user)
+      account = 'Mi cuenta'
+    else
+      account = 'Login'
+
+    const OtherListItems = (
+      <div>
+        <br/>
+        <Link to="/" style={{textDecoration: 'none'}}>
+        <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+            <Typography type="caption" gutterBottom align="center">
+              Inicio
+            </Typography>
+        </ListItem>
+      </Link>
+      <Link to="/catalog" style={{textDecoration: 'none'}}>
+        <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+          <ListItemIcon>
+            <LoyaltyIcon />
+          </ListItemIcon>
+            <Typography type="caption" gutterBottom align="center">
+              Catálogo
+            </Typography>
+        </ListItem>
+      </Link>
+      <Link to="/static" style={{textDecoration: 'none'}}>
+        <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+          <ListItemIcon>
+            <ToysIcon />
+          </ListItemIcon>
+            <Typography type="caption" gutterBottom align="center">
+              Página Estática
+            </Typography>
+        </ListItem>
+      </Link>
+      <Link to="/account" style={{textDecoration: 'none'}}>
+        <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+          <ListItemIcon>
+            <AccountBoxIcon />
+          </ListItemIcon>
+            <Typography type="caption" gutterBottom align="center">
+              {account}
+            </Typography>
+        </ListItem>
+      </Link>
+        <br/>
+      </div>
+    );
 
       const logoListItems = (
         <div>
@@ -352,7 +358,10 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   cart:  PropTypes.array,
+  subtotal: PropTypes.number,
+  user: PropTypes.object,
   classes: PropTypes.object.isRequired,
+  loginUser: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {
@@ -365,7 +374,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //loginUser: (email, password) => dispatch(loginUser(email, password)),
+    loginUser: (email, password) => dispatch(loginUser(email, password)),
   };
 }
 

@@ -26,7 +26,8 @@ const styles = theme => ({
   details: {
     display: 'flex',
   },
-  content: {
+  typography: {
+    color: 'rgba(0,0,0,0.54)',
   },
   cover: {
     display: 'none',
@@ -114,13 +115,17 @@ class CartItem extends React.Component {
                       image={cartItem.img}
                       title={cartItem.name + ' ' + cartItem.variant}
                     />
-                    <CardContent className={classes.content}>
-                      <Typography type="headline" color="secondary" >{cartItem.name}</Typography>
-                      <Typography type="subheading" color="secondary">
+                    <CardContent>
+                      <Typography type="headline" className={classes.typography}>
+                        {cartItem.name}
+                      </Typography>
+                      <Typography type="subheading" className={classes.typography}>
                         {cartItem.variant}
                       </Typography>
                       <br/>
-                      <Typography type="body2" color="secondary">{'Price: $ ' + cartItem.price}</Typography>
+                      <Typography type="body2" className={classes.typography}>
+                        {'Price: $ ' + cartItem.price}
+                      </Typography>
                     </CardContent>
                   </div>
                 </Card>
@@ -128,7 +133,9 @@ class CartItem extends React.Component {
             </Grid>
             <Grid item xs={3} style={{displayFelx:"column"}}>
               <br/>
-              <Typography type="subheading" color="secondary">{'Total: $ ' + (cartItem.quantity*cartItem.price)}</Typography>
+              <Typography type="subheading" className={classes.typography}>
+                {'Total: $ ' + (cartItem.quantity*cartItem.price)}
+              </Typography>
               <br/>
               <QuantitySelector onQuantityClickHandler={this.onQuantityClickHandler} qty={this.state.qty}/>
             </Grid>

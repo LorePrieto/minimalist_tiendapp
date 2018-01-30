@@ -76,7 +76,7 @@ class ProductView extends React.Component {
     super(props);
     this.state = {
       qty: '1',
-      id: this.props.variants.length > 0 ? this.props.variants[0].id : this.props.match.params.variant_id,
+      id: this.props.variants.length > 0 ? this.props.variants[0].id : this.props.match.params.product_id,
     };
     this.onQuantityClickHandler =  this.onQuantityClickHandler.bind(this);
     this.onAddToCartHandler =  this.onAddToCartHandler.bind(this);
@@ -85,7 +85,7 @@ class ProductView extends React.Component {
 
   componentWillReceiveProps() {
     this.setState({
-      id: this.props.variants.length > 0 ? this.props.variants[0].id : this.props.match.params.variant_id,
+      id: this.props.variants.length > 0 ? this.props.variants[0].id : this.props.match.params.product_id,
     });
   }
 
@@ -116,7 +116,7 @@ class ProductView extends React.Component {
       let variant = this.props.variants.find(variant => variant.id === this.state.id);
       if (!variant)
         variant = this.props.product;
-      this.props.addProductToCart(variant.variant_id, variant.name, variant.image, variant.options_text, variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.variant_id);
+      this.props.addProductToCart(variant.variant_id, variant.name, variant.image, variant.options_text, variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.product_id);
       this.props.changeStock(variant.variant_id, parseInt(this.state.qty, 10));
       this.setState({
           qty: '0',
@@ -259,8 +259,8 @@ ProductView.propTypes = {
 
 const mapStateToProps = (state, props) => {
   return {
-    product: productSelector(state, props.match.params.variant_id),
-    variants: variantsProductsSelector(state, props.match.params.variant_id),
+    product: productSelector(state, props.match.params.product_id),
+    variants: variantsProductsSelector(state, props.match.params.product_id),
   };
 }
 
