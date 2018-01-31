@@ -10,10 +10,12 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { grey } from 'material-ui/colors';
+import NodeRSA from 'node-rsa';
 
 // Redux
 import {connect} from 'react-redux';
 import {loginUser} from '../actions/user';
+import {storeSelector} from '../selectors/store';
 
 
 const styles = theme => ({
@@ -49,6 +51,11 @@ const theme = createMuiTheme({
 });
 
 class Login extends React.Component {
+  encryptPassword = (password) => {
+    var key = new NodeRSA(this.props.store.public_key, {encryptionScheme: 'pkcs1'});
+    return key.encrypt(password, 'base64');
+  };
+
   handleModalClick = (event) => {
     event.preventDefault();
     this.props.handleModalOpen()
@@ -56,10 +63,8 @@ class Login extends React.Component {
 
   handleButtonClick = (event) => {
     const {loginUser, email, password } = this.props;
-    //Missing encrypt password
-    loginUser(email, "hZBhm6y1Ffu18GqBCCxT5a4exeU6szr8SEtYojwSUY6IN/MtSZ2j5dZDSjVf\nJopLDXm2DYsMLq3kyIuaPkIOzTZL7c0wNx/cYih53nI9GPcLAAE8SShpdAC4\nZ60GSZF80VF3lwRMh5QJt3Tw7FSAp+P/ROBEqgxGk3+hcEYJLWw=");
+    loginUser(email, this.encryptPassword(password));
   };
-
 
   render() {
     const { open, email, password, loggedIn, classes, handleChange, handleModalClose } = this.props
@@ -138,12 +143,13 @@ Login.propTypes = {
   handleChange: PropTypes.func,
   handleModalClose: PropTypes.func,
   loginUser: PropTypes.func,
+  store: PropTypes.object,
 };
 
 
 const mapStateToProps = (state) => {
   return {
-
+    store: storeSelector(state),
   };
 }
 

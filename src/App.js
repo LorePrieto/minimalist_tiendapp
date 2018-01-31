@@ -10,16 +10,7 @@ import Order from './order/Main.jsx';
 import NoMatch from './noMatch/Main.jsx';
 import Reboot from 'material-ui/Reboot';
 
-// Redux
-import {connect} from 'react-redux';
-import {loadStore} from './actions/store';
-
 class App extends Component {
-
-  componentWillMount(){
-    this.props.loadStore();
-  }
-
   render() {
     return (
       <div id="main">
@@ -38,20 +29,5 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  loadStore: PropTypes.func,
-};
 
-const mapStateToProps = (state) => {
-  return {
-
-  };
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadStore: (public_key) => dispatch(loadStore(public_key)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

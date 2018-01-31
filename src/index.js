@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import root from './reducers/root';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { getAllProducts } from './actions/products.js';
+import { loadStore } from './actions/store.js';
 
 const middlewares = [thunk];
 
@@ -22,6 +23,7 @@ const store = createStore(
 	composedEnhancer
 );
 
+store.dispatch(loadStore());
 store.dispatch(getAllProducts());
 
 ReactDOM.render(
@@ -30,4 +32,5 @@ ReactDOM.render(
 			<App />
 		</BrowserRouter>
 	</Provider>
-	, document.getElementById('root'));
+	, document.getElementById('root')
+);
