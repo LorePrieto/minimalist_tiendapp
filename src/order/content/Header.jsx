@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 
 // Redux
 import {connect} from 'react-redux';
-import { logoutUser } from '../../actions/user.js';
+import {orderSelector} from '../../selectors/orders';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -30,22 +29,15 @@ const styles = theme => ({
 });
 
 class Header extends React.Component {
-
-  handleLogoutClick = event =>{
-    this.props.logoutUser();
-  };
-
   render() {
-    const { classes } =this.props;
+    const { classes, order } =this.props;
+
     return (
       <div>
         <Paper className={classes.root} elevation={4}>
           <Typography type="headline" component="h3" className={classes.typography}>
-            Tu cuenta
+            Pedido: {order.number}
           </Typography>
-          <Button size="small" raised className={classes.button} onClick={this.handleLogoutClick}>
-            Cerrar sessión
-          </Button>
         </Paper>
       </div>
     );
@@ -54,18 +46,18 @@ class Header extends React.Component {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func,
+  order: PropTypes.object,
 };
 
 const mapStateToProps = (state, props) => {
   return {
-
+    order: orderSelector(state, props.match.params.number),
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logoutUser: () => dispatch(logoutUser()),
+
   };
 }
 
