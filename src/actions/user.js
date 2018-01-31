@@ -1,14 +1,14 @@
 import {ADD_ITEM_TO_CART} from './cart.js';
 
 export const ADD_USER = 'ADD_USER';
-export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 
-export const addUser = (email, cartID) => {
+export const addUser = (email, cartID, token) => {
   return {
-    type: LOGIN_USER,
+    type: ADD_USER,
     email,
-    cartID
+    cartID,
+    token
   };
 };
 
@@ -35,7 +35,7 @@ export const loginUser = (email, password) => {
       error => console.log('An error occurred.', error)
     )
     .then((responseJson) => {
-      dispatch(addUser(email, responseJson.cart.id))
+      dispatch(addUser(email, responseJson.cart.id, responseJson.user.spree_api_key))
       fetch('http://tutienda.lvh.me:4000/api/orders/'+responseJson.cart.id)
       .then(
         response => response.json(),
