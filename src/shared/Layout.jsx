@@ -197,7 +197,7 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, children, cart, store } = this.props;
+    const { classes, children, cart } = this.props;
 
     let carro;
     if (cart.length > 0)

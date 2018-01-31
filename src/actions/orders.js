@@ -2,6 +2,7 @@ export const ADD_ORDER = 'ADD_ORDER';
 export const ADD_ITEM_TO_ORDER = 'ADD_ITEM_TO_ORDER';
 export const ADD_PAYMENT_TO_ORDER = 'ADD_PAYMENT_TO_ORDER';
 export const ADD_SHIPMENT_TO_ORDER = 'ADD_SHIPMENT_TO_ORDER';
+export const REMOVE_ALL_ORDERS =  'REMOVE_ALL_ORDERS';
 
 export const addOrder = (
   number,
@@ -108,6 +109,12 @@ export const addShipmentToOrder = (
     cost,
     name,
     state
+  };
+};
+
+export const removeAllOrders = () => {
+  return{
+    type: REMOVE_ALL_ORDERS,
   };
 };
 

@@ -1,8 +1,8 @@
 import { loadCartItems } from './cart.js';
-import { loadOrders } from './orders.js';
+import { loadOrders, removeAllOrders } from './orders.js';
 
 export const ADD_USER = 'ADD_USER';
-export const LOGOUT_USER = 'LOGOUT_USER';
+export const REMOVE_USER = 'REMOVE_USER';
 
 export const addUser = (email, cartID, token) => {
   return {
@@ -13,11 +13,11 @@ export const addUser = (email, cartID, token) => {
   };
 };
 
-export const logoutUser = () => {
+export const removeUser = () => {
   return {
-    type: LOGOUT_USER,
-  }
-}
+    type: REMOVE_USER,
+  };
+};
 
 export const loginUser = (email, password) => {
   return function (dispatch) {
@@ -40,5 +40,13 @@ export const loginUser = (email, password) => {
       dispatch(loadCartItems(responseJson.cart.id));
       dispatch(loadOrders(responseJson.user.spree_api_key));
     });
+  };
+};
+
+export const logoutUser = () => {
+  return function (dispatch) {
+    return (dispatch(removeUser()),
+      dispatch(removeAllOrders())
+    )
   }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import Landing from './landing/Main.jsx';
 import Product from './product/Main.jsx';

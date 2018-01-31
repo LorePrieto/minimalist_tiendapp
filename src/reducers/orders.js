@@ -2,12 +2,13 @@ import {
     ADD_ORDER,
     ADD_ITEM_TO_ORDER,
     ADD_PAYMENT_TO_ORDER,
-    ADD_SHIPMENT_TO_ORDER
+    ADD_SHIPMENT_TO_ORDER,
+    REMOVE_ALL_ORDERS,
 } from '../actions/orders';
 
 const orders = (state=[], action) => {
   const { type } = action;
-  const newState = [...state];
+  var newState = [...state];
   switch (type) {
       case ADD_ORDER: {
         const {
@@ -132,6 +133,10 @@ const orders = (state=[], action) => {
             });
           }
         });
+        return newState;
+      }
+      case REMOVE_ALL_ORDERS: {
+        newState = [];
         return newState;
       }
       default:{

@@ -1,6 +1,6 @@
 import {
     ADD_USER,
-    LOGOUT_USER
+    REMOVE_USER
 } from '../actions/user';
 
 const user = (state=[], action) => {
@@ -13,7 +13,7 @@ const user = (state=[], action) => {
         newState.push({email, cartID, token});
         return newState;
       }
-      case LOGOUT_USER: {
+      case REMOVE_USER: {
         newState.pop();
         return newState;
       }
