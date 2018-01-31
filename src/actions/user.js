@@ -1,4 +1,5 @@
-import {ADD_ITEM_TO_CART} from './cart.js';
+import { loadCartItems } from './cart.js';
+import { loadOrders } from './orders.js';
 
 export const ADD_USER = 'ADD_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -35,26 +36,9 @@ export const loginUser = (email, password) => {
       error => console.log('An error occurred.', error)
     )
     .then((responseJson) => {
-      dispatch(addUser(email, responseJson.cart.id, responseJson.user.spree_api_key))
-      fetch('http://tutienda.lvh.me:4000/api/orders/'+responseJson.cart.id)
-      .then(
-        response => response.json(),
-        error => console.log('An error occurred.', error)
-      ).then( json => {
-        const items = json.line_items;
-        items.forEach(item =>
-          dispatch({
-            type: ADD_ITEM_TO_CART,
-            variant_id: item.variant.id,
-            name: item.variant.name,
-            img: item.variant.images.length === 0 ? "https://hdwallsource.com/img/2014/6/free-animal-wallpaper-25043-25726-hd-wallpapers.jpg" : item.variant.images[0].large_url,
-            variant: item.variant.options_text,
-            price: parseInt(item.variant.price,10),
-            quantity: item.quantity,
-            product_id: item.variant.product_id
-          })
-        );
-      });
+      dispatch(addUser(email, responseJson.cart.id, responseJson.user.spree_api_key));
+      dispatch(loadCartItems(responseJson.cart.id));
+      dispatch(loadOrders(responseJson.user.spree_api_key));
     });
   }
 }

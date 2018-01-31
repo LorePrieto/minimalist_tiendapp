@@ -31,3 +31,26 @@ export const changeItemQuantity = (variant_id, price, quantity) => {
     quantity
   };
 };
+
+export const loadCartItems = (cartID) => {
+  return function (dispatch) {
+    return fetch('http://tutienda.lvh.me:4000/api/orders/'+cartID)
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error)
+    ).then( json => {
+      json.line_items.forEach(item =>
+        dispatch({
+          type: ADD_ITEM_TO_CART,
+          variant_id: item.variant.id,
+          name: item.variant.name,
+          img: item.variant.images.length === 0 ? "https://hdwallsource.com/img/2014/6/free-animal-wallpaper-25043-25726-hd-wallpapers.jpg" : item.variant.images[0].large_url,
+          variant: item.variant.options_text,
+          price: parseInt(item.variant.price,10),
+          quantity: item.quantity,
+          product_id: item.variant.product_id
+        })
+      );
+    });
+  }
+}
