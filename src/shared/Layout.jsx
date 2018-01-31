@@ -21,10 +21,12 @@ import ProductsListItems from './cart/cartData.jsx';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import Login from './Login';
+import NodeRSA from 'node-rsa';
 
 // Redux
 import {connect} from 'react-redux';
 import { loginUser } from '../actions/user.js';
+import { storeSelector } from '../selectors/store.js';
 import {cartSelector, getSubtotal} from '../selectors/cart.js';
 import { userSelector } from '../selectors/user.js';
 
@@ -197,7 +199,7 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, children, cart } = this.props;
+    const { classes, children, cart, store } = this.props;
 
     let carro;
     if (cart.length > 0)
@@ -382,6 +384,7 @@ Layout.propTypes = {
   user: PropTypes.object,
   classes: PropTypes.object.isRequired,
   loginUser: PropTypes.func,
+  store: PropTypes.object,
 };
 
 const mapStateToProps = (state, props) => {
@@ -389,6 +392,7 @@ const mapStateToProps = (state, props) => {
     cart: cartSelector(state),
     subtotal: getSubtotal(state),
     user: userSelector(state),
+    store: storeSelector(state),
   };
 }
 
