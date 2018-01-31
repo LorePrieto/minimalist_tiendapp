@@ -113,7 +113,6 @@ export const addShipmentToOrder = (
 
 export const loadOrders = (token) => {
   return function (dispatch) {
-    console.log(token);
     return fetch('http://tutienda.lvh.me:4000/api/orders/mine', {
       method: 'GET',
       headers: new Headers({
