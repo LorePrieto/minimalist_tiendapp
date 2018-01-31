@@ -56,9 +56,10 @@ class Login extends React.Component {
 
   handleButtonClick = (event) => {
     const {loginUser, email, password } = this.props;
-
+    //Missing encrypt password
     loginUser(email, "hZBhm6y1Ffu18GqBCCxT5a4exeU6szr8SEtYojwSUY6IN/MtSZ2j5dZDSjVf\nJopLDXm2DYsMLq3kyIuaPkIOzTZL7c0wNx/cYih53nI9GPcLAAE8SShpdAC4\nZ60GSZF80VF3lwRMh5QJt3Tw7FSAp+P/ROBEqgxGk3+hcEYJLWw=");
   };
+
 
   render() {
     const { open, email, password, loggedIn, classes, handleChange, handleModalClose } = this.props
@@ -71,7 +72,7 @@ class Login extends React.Component {
               <AccountBoxIcon />
             </ListItemIcon>
               <Typography type="caption" gutterBottom align="center">
-                'Mi Cuenta'
+                Mi Cuenta
               </Typography>
           </ListItem>
         </Link>
