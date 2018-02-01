@@ -15,7 +15,7 @@ import NodeRSA from 'node-rsa';
 // Redux
 import {connect} from 'react-redux';
 import {loginUser} from '../actions/user';
-import {storeSelector} from '../selectors/store';
+import {tiendappSelector} from '../selectors/tiendapp';
 
 
 const styles = theme => ({
@@ -52,7 +52,7 @@ const theme = createMuiTheme({
 
 class Login extends React.Component {
   encryptPassword = (password) => {
-    var key = new NodeRSA(this.props.store.public_key, {encryptionScheme: 'pkcs1'});
+    var key = new NodeRSA(this.props.tiendapp.public_key, {encryptionScheme: 'pkcs1'});
     return key.encrypt(password, 'base64');
   };
 
@@ -143,13 +143,13 @@ Login.propTypes = {
   handleChange: PropTypes.func,
   handleModalClose: PropTypes.func,
   loginUser: PropTypes.func,
-  store: PropTypes.object,
+  tiendapp: PropTypes.object,
 };
 
 
 const mapStateToProps = (state) => {
   return {
-    store: storeSelector(state),
+    tiendapp: tiendappSelector(state),
   };
 }
 

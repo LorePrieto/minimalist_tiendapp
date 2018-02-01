@@ -140,7 +140,7 @@ const orders = (state=[], action) => {
         return newState;
       }
       default:{
-        return newState;
+        return state;
       }
   }
 }

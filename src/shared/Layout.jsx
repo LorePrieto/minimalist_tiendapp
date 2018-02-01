@@ -24,7 +24,6 @@ import Login from './Login';
 
 // Redux
 import {connect} from 'react-redux';
-import { loginUser } from '../actions/user.js';
 import {cartSelector, getSubtotal} from '../selectors/cart.js';
 import { userSelector } from '../selectors/user.js';
 
@@ -155,10 +154,6 @@ class Layout extends React.Component {
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
-  // componentDidMount(){
-  //   this.props.loginUser("susu@uc.cl", "hZBhm6y1Ffu18GqBCCxT5a4exeU6szr8SEtYojwSUY6IN/MtSZ2j5dZDSjVf\nJopLDXm2DYsMLq3kyIuaPkIOzTZL7c0wNx/cYih53nI9GPcLAAE8SShpdAC4\nZ60GSZF80VF3lwRMh5QJt3Tw7FSAp+P/ROBEqgxGk3+hcEYJLWw=");
-  // };
 
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -381,7 +376,6 @@ Layout.propTypes = {
   subtotal: PropTypes.number,
   user: PropTypes.object,
   classes: PropTypes.object.isRequired,
-  loginUser: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {
@@ -394,7 +388,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginUser: (email, password) => dispatch(loginUser(email, password)),
+    
   };
 }
 

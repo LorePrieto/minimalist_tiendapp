@@ -1,21 +1,21 @@
 import {
-    ADD_STORE,
-} from '../actions/store';
+    ADD_TIENDAPP,
+} from '../actions/tiendapp';
 
-const store = (state=[], action) => {
+const tiendapp = (state=[], action) => {
   const { type } = action;
   const newState = [...state];
   switch (type) {
-      case ADD_STORE: {
+      case ADD_TIENDAPP: {
         const { public_key } = action;
         newState.pop();
         newState.push({public_key});
         return newState;
       }
       default:{
-        return newState;
+        return state;
       }
   }
 }
 
-export default store;
+export default tiendapp;

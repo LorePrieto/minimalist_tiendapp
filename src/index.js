@@ -2,35 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import root from './reducers/root';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { getAllProducts } from './actions/products.js';
-import { loadStore } from './actions/store.js';
+import { loadTiendapp } from './actions/tiendapp.js';
+import configureStore from './configureStore'
 
-const middlewares = [thunk];
-
-const middlewareEnhancer = applyMiddleware(...middlewares);
-
-const storeEnhancers = [middlewareEnhancer];
-
-const composedEnhancer = composeWithDevTools(...storeEnhancers);
-
-const store = createStore(
-	root,
-	composedEnhancer
-);
-
-store.dispatch(loadStore());
+const { store, persistor } = configureStore()
+store.dispatch(loadTiendapp());
 store.dispatch(getAllProducts());
 
 ReactDOM.render(
 	<Provider store={store}>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
+		<PersistGate loading={null} persistor={persistor}>
+			<BrowserRouter>
+				<App persistor={persistor}/>
+			</BrowserRouter>
+    </PersistGate>
 	</Provider>
 	, document.getElementById('root')
 );
