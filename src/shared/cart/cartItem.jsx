@@ -107,7 +107,7 @@ class CartItem extends React.Component {
         <Grid item key={cartItem.variant_id} xs={12} className={classes.product}>
           <Grid container justify="center" spacing={16}>
             <Grid item xs={8} >
-              <Link to={'/product/'+cartItem.product_id} style={{textDecoration: 'none'}} onClick={onLinkClick()}>
+              <a href={'/product/'+cartItem.product_id} style={{textDecoration: 'none'}} onClick={onLinkClick()}>
                 <Card className={classes.card}>
                   <div className={classes.details}>
                     <CardMedia
@@ -129,7 +129,7 @@ class CartItem extends React.Component {
                     </CardContent>
                   </div>
                 </Card>
-              </Link>
+              </a>
             </Grid>
             <Grid item xs={3} style={{displayFelx:"column"}}>
               <br/>
