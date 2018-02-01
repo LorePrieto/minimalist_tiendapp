@@ -41,6 +41,9 @@ class QuantitySelector extends React.Component {
 
 QuantitySelector.propTypes = {
   classes: PropTypes.object.isRequired,
+  qty: PropTypes.string,
+  onQuantityClickHandler: PropTypes.func,
+  disabled: PropTypes.string,
 };
 
 export default withStyles(styles)(QuantitySelector);

@@ -49,6 +49,9 @@ class VariantSelector extends React.Component {
 
 VariantSelector.propTypes = {
   classes: PropTypes.object.isRequired,
+  variantNames: PropTypes.array,
+  variant: PropTypes.number,
+  onVariantClickHandler: PropTypes.func,
 };
 
 export default withStyles(styles)(VariantSelector);

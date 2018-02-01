@@ -2,10 +2,10 @@ import { createSelector } from 'reselect';
 
 export const productsSelector = (state) => state.products;
 
-export const productSelector = (state, id) => state.products[id];
+export const productSelector = (state, id) => state.products.filter(product => product.product_id === parseInt(id, 10))[0];
 
 const is_master = (product) => {
-  return product.variant.is_master
+  return product.is_master
 };
 
 export const masterProductsSelector = createSelector(
@@ -21,5 +21,5 @@ export const featureProductsSelector = createSelector(
 export const variantsProductsSelector = createSelector(
     productsSelector,
     productSelector,
-    (products, product) => products.filter(prod => !prod.variant.is_master && prod.product_id === product.product_id)
+    (products, product) => products.filter(prod => !prod.is_master && prod.product_id === product.product_id)
 );

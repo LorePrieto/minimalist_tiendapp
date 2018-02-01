@@ -8,19 +8,24 @@ import Typography from 'material-ui/Typography';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import List from 'material-ui/List';
+import { Link } from 'react-router-dom';
+import HomeIcon from 'material-ui-icons/Home';
+import LoyaltyIcon from 'material-ui-icons/Loyalty';
+import ToysIcon from 'material-ui-icons/Toys';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
 import CloseIcon from 'material-ui-icons/Close';
-import { logoListItems, OtherListItems } from './tileData.js';
 import ProductsListItems from './cart/cartData.jsx';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
+import Login from './Login';
 
 // Redux
 import {connect} from 'react-redux';
 import {cartSelector, getSubtotal} from '../selectors/cart.js';
+import { userSelector } from '../selectors/user.js';
 
 
 const drawerWidth = 260;
@@ -61,8 +66,12 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       position: 'relative',
-      height: '100%',
+      overflowY: 'scroll',
     },
+  },
+  logo: {
+    height: '20%',
+    padding: 0,
   },
   drawerCart: {
     width: 300,
@@ -129,11 +138,22 @@ const styles = theme => ({
 });
 
 class Layout extends React.Component {
-  state = {
-    mobileOpen: false,
-    right: false,
-    notice: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      mobileOpen: false,
+      right: false,
+      notice: false,
+      openModal: false,
+      email: '',
+      password: '',
+
+    };
+    this.onLinkClick =  this.onLinkClick.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -141,12 +161,38 @@ class Layout extends React.Component {
     });
   };
 
+  handleModalOpen = () => {
+    this.setState({
+      openModal: true
+    });
+  };
+
+  handleModalClose = () => event => {
+   this.setState({
+     openModal: false,
+     password: '',
+     email: ''
+   });
+  };
+
+  handleChange = prop => event => {
+    this.setState({
+      [prop]: event.target.value
+    });
+  };
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
 
+  onLinkClick = () => event => {
+    this.setState({
+      right: false
+    });
+  };
+
   render() {
-    const { classes, theme, children, cart } = this.props;
+    const { classes, children, cart } = this.props;
 
     let carro;
     if (cart.length > 0)
@@ -154,10 +200,62 @@ class Layout extends React.Component {
     else
       carro  = 'Carro'
 
+    const OtherListItems = (
+      <div>
+        <br/>
+        <Link to="/" style={{textDecoration: 'none'}}>
+        <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+            <Typography type="caption" gutterBottom align="center">
+              Inicio
+            </Typography>
+        </ListItem>
+      </Link>
+      <Link to="/catalog" style={{textDecoration: 'none'}}>
+        <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+          <ListItemIcon>
+            <LoyaltyIcon />
+          </ListItemIcon>
+            <Typography type="caption" gutterBottom align="center">
+              Catálogo
+            </Typography>
+        </ListItem>
+      </Link>
+      <Link to="/static" style={{textDecoration: 'none'}}>
+        <ListItem button style={{width: '100%', paddingLeft: '45px'}}>
+          <ListItemIcon>
+            <ToysIcon />
+          </ListItemIcon>
+            <Typography type="caption" gutterBottom align="center">
+              Página Estática
+            </Typography>
+        </ListItem>
+      </Link>
+      <Login
+        open={this.state.openModal}
+        email={this.state.email}
+        password={this.state.password}
+        handleChange={this.handleChange}
+        loggedIn={ this.props.user ? true : false}
+        handleModalClose={this.handleModalClose}
+        handleModalOpen={this.handleModalOpen}
+      />
+      <br/>
+      </div>
+    );
+
+    const logoListItems = (
+      <div>
+        <img src={"/images/logo.png"} alt="logo" style={{width: '90%', display: 'block', marginLeft: 'auto', marginRight: 'auto',}}/>
+      </div>
+    );
+
     const navbar = (
       <div>
         <div className={classes.drawerHeader} />
-        <List>{logoListItems}</List>
+        <List className={classes.logo}>{logoListItems}</List>
         <Divider />
           <div>
             <br/>
@@ -207,7 +305,7 @@ class Layout extends React.Component {
           <Hidden mdUp>
             <Drawer
               type="temporary"
-              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              anchor='left'
               open={this.state.mobileOpen}
               classes={{
                 paper: classes.drawerPaper,
@@ -252,7 +350,7 @@ class Layout extends React.Component {
               </Typography>
               <Divider style={{margin: 10}} />
               <div style={{width: '100%'}}>
-                <ProductsListItems />
+                <ProductsListItems onLinkClick={this.onLinkClick}/>
               </div>
               <div style={{width: '100%'}}>
                 <Typography type="headline" component="h3" className={classes.cartSubtotal}>
@@ -274,22 +372,23 @@ class Layout extends React.Component {
 }
 
 Layout.propTypes = {
-  addProductToCart: PropTypes.func,
   cart:  PropTypes.array,
+  subtotal: PropTypes.number,
+  user: PropTypes.object,
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
   return {
     cart: cartSelector(state),
     subtotal: getSubtotal(state),
+    user: userSelector(state),
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    
   };
 }
 

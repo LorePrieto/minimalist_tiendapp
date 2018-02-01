@@ -25,7 +25,7 @@ function Message(props) {
         <Typography type="display3" component="h2" className={classes.typography}>
           404: Page not found.
         </Typography>
-        <Typography component="display1" className={classes.typography}>
+        <Typography type="display1" className={classes.typography}>
           Try clicking on the menu to the left.
         </Typography>
       </Paper>

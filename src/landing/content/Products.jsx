@@ -27,8 +27,8 @@ class Products extends React.Component {
       <Grid container spacing={40} className={classes.grid}>
         {this.props.products.map(product => (
           <Grid item key={product.name + product.id} xs={12} md={4}>
-            <Link to={'/product/'+product.id} style={{textDecoration: 'none'}}>
-              <SimpleMediaCard data={product} key={product.id} />
+            <Link to={'/product/'+product.product_id} style={{textDecoration: 'none'}}>
+              <SimpleMediaCard product={product} key={product.id} />
             </Link>
           </Grid>
         ))}

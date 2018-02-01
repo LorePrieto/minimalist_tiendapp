@@ -130,9 +130,14 @@ class IntegrationAutosuggest extends React.Component {
 
   handleSuggestionsFetchRequested = ({ value }) => {
     const suggs = [];
-    this.props.products.map(product =>
-      suggs.push({label: product.name})
-    );
+    this.props.products.forEach(product =>{
+      if (!suggs.find(sugg => sugg.label ===  product.name))
+        suggs.push({label:  product.name});
+      product.taxon_names.forEach(taxon =>{
+        if (!suggs.find(sugg => sugg.label === taxon))
+          suggs.push({label: taxon});
+      });
+    });
     this.setState({
       suggestions: getSuggestions(value, suggs),
     });
@@ -142,6 +147,8 @@ class IntegrationAutosuggest extends React.Component {
     this.setState({
       suggestions: [],
     });
+    if(this.state.value.length <= 2)
+      this.props.emptyQuery()
   };
 
   handleChange = (event, { newValue }) => {
@@ -150,12 +157,8 @@ class IntegrationAutosuggest extends React.Component {
     });
   };
 
-  changeProducts = (event, { suggestion, suggestionValue}) => {
-    console.log(suggestion)
-  };
-
   render() {
-    const { classes } = this.props;
+    const { classes, onChangeProduct } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -170,14 +173,14 @@ class IntegrationAutosuggest extends React.Component {
           suggestions={this.state.suggestions}
           onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
-          onSuggestionSelected={this.changeProducts}
+          onSuggestionSelected={onChangeProduct(this.state.value)}
           renderSuggestionsContainer={renderSuggestionsContainer}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={{
             autoFocus: true,
             classes,
-            placeholder: 'Search for a product',
+            placeholder: 'Busca un producto o categoría',
             value: this.state.value,
             onChange: this.handleChange,
           }}
@@ -190,7 +193,8 @@ class IntegrationAutosuggest extends React.Component {
 IntegrationAutosuggest.propTypes = {
   addProduct: PropTypes.func,
   classes: PropTypes.object.isRequired,
-  products: PropTypes.array
+  products: PropTypes.array,
+  onChangeProduct: PropTypes.func
 };
 
 const mapStateToProps = (state) => {

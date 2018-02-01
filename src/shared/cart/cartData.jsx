@@ -10,12 +10,12 @@ import { cartSelector } from '../../selectors/cart';
 class ProductsListItems extends React.Component {
 
   render() {
-    const { cart } = this.props;
+    const { cart, onLinkClick } = this.props;
 
     return (
       <Grid container spacing={0}>
         {cart.map(product => (
-          <CartItem cartItem={product} key={'cart'+product.local_id}/>
+          <CartItem cartItem={product} key={'cart'+product.variant_id} onLinkClick={onLinkClick}/>
         ))}
       </Grid>
     );
@@ -23,7 +23,8 @@ class ProductsListItems extends React.Component {
 }
 
 ProductsListItems.propTypes = {
-  cart: PropTypes.array
+  cart: PropTypes.array,
+  onLinkClick: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {
