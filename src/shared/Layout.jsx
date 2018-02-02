@@ -27,6 +27,7 @@ import New from './New';
 // Redux
 import {connect} from 'react-redux';
 import { updateAllCart } from '../actions/initial.js';
+import { guestUser } from '../actions/user.js';
 import {cartSelector, getSubtotal} from '../selectors/cart.js';
 import { userSelector } from '../selectors/user.js';
 
@@ -168,8 +169,13 @@ class Layout extends React.Component {
   }
 
   componentDidMount = () => {
-    if (this.props.user)
-      this.props.updateAllCart(this.props.user.token);
+    if (this.props.user){
+      if (this.props.user.email !== ''){
+        this.props.updateAllCart(this.props.user.token);
+      }
+    }else{
+      this.props.guestUser();
+    }
   }
 
   toggleDrawer = (side, open) => () => {
@@ -284,6 +290,12 @@ class Layout extends React.Component {
     else
       carro  = 'Carro'
 
+    let loggedIn;
+    if (this.props.user)
+      loggedIn = this.props.user.email !== '' ? true : false;
+    else
+      loggedIn = false;
+
     const OtherListItems = (
       <div>
         <br/>
@@ -322,7 +334,7 @@ class Layout extends React.Component {
         email={this.state.email}
         password={this.state.password}
         handleChange={this.handleChange}
-        loggedIn={ this.props.user ? true : false}
+        loggedIn={loggedIn}
         handleModalClose={this.handleModalClose}
         handleModalOpen={this.handleModalOpen}
         handleClickRecover={this.handleClickRecover}
@@ -332,7 +344,6 @@ class Layout extends React.Component {
         open={this.state.openRecover}
         email={this.state.email}
         handleChange={this.handleChange}
-        loggedIn={ this.props.user ? true : false}
         handleRecoverClose={this.handleRecoverClose}
         handleClickLogin={this.handleClickLogin}
         handleClickNew={this.handleClickNew}
@@ -484,6 +495,7 @@ Layout.propTypes = {
   user: PropTypes.object,
   classes: PropTypes.object.isRequired,
   updateAllInfo: PropTypes.func,
+  guestUser: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {
@@ -496,7 +508,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateAllCart: (token) => dispatch(updateAllCart(token))
+    updateAllCart: (token) => dispatch(updateAllCart(token)),
+    guestUser: () => dispatch(guestUser())
   };
 }
 

@@ -56,7 +56,8 @@ export const loginUser = (email, password) => {
 export const logoutUser = () => {
   return function (dispatch) {
     return (dispatch(removeUser()),
-      dispatch(removeAllOrders())
+      dispatch(removeAllOrders()),
+      this.guestUser()
     )
   };
 };
@@ -81,6 +82,25 @@ export const updateUserCurrentCart = (token) => {
           dispatch(loadCartItems(order.number));
         }
       });
+    });
+  }
+}
+
+export const guestUser = () => {
+  return function (dispatch) {
+    return fetch('http://tutienda.lvh.me:4000/api/orders.json', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      })
+    })
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error)
+    )
+    .then((responseJson) => {
+      console.log(responseJson);
+      dispatch(addUser('', '', responseJson.number, responseJson.token));
     });
   }
 }

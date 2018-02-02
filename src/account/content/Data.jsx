@@ -149,7 +149,8 @@ class Data extends React.Component {
 
   componentDidMount = () => {
     if (this.props.user)
-      this.props.updateAllOrders(this.props.user.token);
+      if (this.props.user.email !== '')
+        this.props.updateAllOrders(this.props.user.token);
   }
 
   handleChangePage = (event, page) => {
