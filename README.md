@@ -1,6 +1,5 @@
 ##### This project is a Templete to be used in [TiendApp.cl](http://tiendapp.cl). The following technologies where used: ReactJS, Redux, Material-UI :heart_eyes:, Redux-Persist, React-Router v4, etc...
---
---
+
 ## Table of Contents
 - [Rquirements](#requirements)
 - [Action Flow](#action-flow)
@@ -39,6 +38,23 @@ The template's main component is the 'Layout' component, in the shared folder. L
 Other shared elements include the Footer component, that has four child components. It includes a reduce 'About' section, a subscription form, social media buttons and copyright information. The Cart component mentioned before is also a shared component.
 
 ## TO-DO
+Tasks not yet fulfilled:
+- Add Liquid
+- Single Order View
+- Try saving storing with [persist cookies](https://github.com/abersager/redux-persist-cookie-storage)
+- Buying as guest
+- When adding a product, open cart
+- Forms validations (all)
+- When hitting enter in form, submit
+- Getting store favicon and logo
+- Connect checkout to TienApp backend
+- Insert HTML in product's description
+- In catalog, use paginated calls to API
+- In catalog, filter the autosuggest with less than three letters
+
+For more information: [Trello Board](https://trello.com/b/MqmmlpAS/template) -- beware of Spanglish!
 
 ## Contact
-contacto@tiendapp.cl
+- contacto@tiendapp.cl
+- mtprieto@uc.cl
+- flucchini@uc.cl
