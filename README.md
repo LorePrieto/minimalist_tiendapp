@@ -35,7 +35,7 @@ The template's main component is the 'Layout' component, in the shared folder. L
 4. Product: it's the view of one product in detail. 
 5. Static: static pages with simple HTML elements. Shows simple text. 
 
-Other shared elements include the Footer component, that has four child components. It includes a reduce 'About' section, a subscription form, social media buttons and copyright information. The Cart component mentioned before is also a shared component.
+Other shared elements include the Footer component, that has four child components. It includes a small 'About' section, a subscription form, social media buttons and copyright information. The Cart component mentioned before is also a shared component.
 
 ## TO-DO
 Tasks not yet fulfilled:
@@ -49,6 +49,7 @@ Tasks not yet fulfilled:
 - Getting store favicon and logo
 - Connect checkout to TienApp backend
 - Insert HTML in product's description
+- Insert HTML in static page
 - In catalog, use paginated calls to API
 - In catalog, filter the autosuggest with less than three letters
 
