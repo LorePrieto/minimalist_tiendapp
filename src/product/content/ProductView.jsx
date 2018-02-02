@@ -132,7 +132,6 @@ class ProductView extends React.Component {
 
   render(){
     const { classes, product, variants, user } = this.props;
-    console.log(user);
 
     if (product) {
       if ((product.has_variants && variants.length > 0) || !product.has_variants){

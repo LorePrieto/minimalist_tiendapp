@@ -57,8 +57,7 @@ export const logoutUser = () => {
   return function (dispatch) {
     return (
       dispatch(removeUser()),
-      dispatch(removeAllOrders()),
-      dispatch(removeAllItemsFromCart())
+      dispatch(removeAllOrders())
     )
   };
 };

@@ -168,8 +168,19 @@ class Layout extends React.Component {
   }
 
   componentDidMount = () => {
-    if (this.props.user)
+    if (this.props.user){
       this.props.updateAllCart(this.props.user.token);
+    }
+  }
+
+  openCart = (side, open) => () => {
+    if (this.props.user){
+      this.setState({
+        [side]: open,
+      });
+    } else {
+      alert("Debes ingresar a tu cuenta para comprar.");
+    }
   }
 
   toggleDrawer = (side, open) => () => {
@@ -276,13 +287,17 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, children, cart } = this.props;
+    const { classes, children, cart, user } = this.props;
 
     let carro;
-    if (cart.length > 0)
-      carro = 'Carro ('+cart.length+')'
-    else
-      carro  = 'Carro'
+    if (user){
+      if (cart.length > 0)
+        carro = 'Carro ('+cart.length+')'
+      else
+        carro  = 'Carro'
+    } else {
+      carro = 'Carro'
+    }
 
     const OtherListItems = (
       <div>
@@ -366,7 +381,7 @@ class Layout extends React.Component {
         <Divider />
           <div>
             <br/>
-            <ListItem button onClick={this.toggleDrawer('right', true)} style={{width: '100%', paddingLeft: '45px'}}>
+            <ListItem button onClick={this.openCart('right', true)} style={{width: '100%', paddingLeft: '45px'}}>
               <ListItemIcon>
                 <ShoppingCartIcon />
               </ListItemIcon>
@@ -466,7 +481,7 @@ class Layout extends React.Component {
               </div>
               <Divider style={{margin: 10}} />
               <div style={{width: '100%'}}>
-                <Button raised className={classes.button}>
+                <Button raised className={classes.button} >
                   Comprar
                 </Button>
               </div>
