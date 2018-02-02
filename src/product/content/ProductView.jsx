@@ -131,7 +131,8 @@ class ProductView extends React.Component {
   };
 
   render(){
-    const { classes, product, variants } = this.props;
+    const { classes, product, variants, user } = this.props;
+    console.log(user);
 
     if (product) {
       if ((product.has_variants && variants.length > 0) || !product.has_variants){
@@ -178,6 +179,12 @@ class ProductView extends React.Component {
         } else {
           stockText = 'Quedan ' +currentVar.total_on_hand+' en stock.';
         }
+        let userText;
+        if (user){
+          userText = "";
+        } else {
+          userText = "Debes ingresar a tu cuenta para comprar";
+        }
         if (product.is_master)
           return (
             <MuiThemeProvider theme={theme}>
@@ -209,9 +216,15 @@ class ProductView extends React.Component {
                       <br/>
                     </div>
                     <div style={{width: '100%'}}>
-                      <Button raised disabled={disable === 'true'} className={classes.button} onClick={this.onAddToCartHandler}>
+                      <Button raised disabled={disable === 'true' || !user} className={classes.button} onClick={this.onAddToCartHandler}>
                         {addCartText}
                       </Button>
+                    </div>
+                    <div>
+                      <Typography className={classes.stockText}>
+                        {userText}
+                      </Typography>
+                      <br/>
                     </div>
                   </Grid>
                 </Grid>
