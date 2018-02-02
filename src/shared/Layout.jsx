@@ -21,6 +21,8 @@ import ProductsListItems from './cart/cartData.jsx';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import Login from './Login';
+import Recover from './Recover';
+import New from './New';
 
 // Redux
 import {connect} from 'react-redux';
@@ -146,14 +148,23 @@ class Layout extends React.Component {
       right: false,
       notice: false,
       openModal: false,
+      openRecover: false,
+      openNew: false,
       email: '',
       password: '',
-
+      confirmation: ''
     };
     this.onLinkClick =  this.onLinkClick.bind(this);
     this.handleModalClose = this.handleModalClose.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClickRecover = this.handleClickRecover.bind(this);
+    this.handleClickLogin = this.handleClickLogin.bind(this);
+    this.handleClickNew = this.handleClickNew.bind(this);
+    this.handleRecoverClose = this.handleRecoverClose.bind(this);
+    this.RecoverClose = this.RecoverClose.bind(this);
+    this.handleNewClose = this.handleNewClose.bind(this);
+    this.NewClose = this.NewClose.bind(this);
   }
 
   componentDidMount = () => {
@@ -177,8 +188,75 @@ class Layout extends React.Component {
    this.setState({
      openModal: false,
      password: '',
-     email: ''
+     email: '',
+     confirmation: ''
    });
+  };
+
+  handleNewClose = () => event => {
+   this.setState({
+     openNew: false,
+     password: '',
+     email: '',
+     confirmation: ''
+   });
+  };
+
+  RecoverClose = () => {
+    this.setState({
+     openRecover: false,
+     email: '',
+     password: '',
+     confirmation: ''
+    });
+  }
+
+  NewClose = () => {
+    this.setState({
+     openNew: false,
+     email: '',
+     password: '',
+     confirmation: ''
+    });
+  }
+
+  handleRecoverClose = () => event => {
+    this.setState({
+     openRecover: false,
+     email: '',
+     password: '',
+     confirmation: ''
+    });
+  };
+
+  handleClickRecover = () => {
+    this.setState({
+      openModal: false,
+      openNew: false,
+      openRecover:true,
+      password: '',
+      confirmation: ''
+    });
+  };
+
+  handleClickLogin = () => {
+    this.setState({
+      openModal: true,
+      openNew: false,
+      openRecover:false,
+      password: '',
+      confirmation: ''
+    });
+  };
+
+  handleClickNew = () => {
+    this.setState({
+      openModal: false,
+      openNew: true,
+      openRecover:false,
+      password: '',
+      confirmation: '',
+    });
   };
 
   handleChange = prop => event => {
@@ -247,6 +325,29 @@ class Layout extends React.Component {
         loggedIn={ this.props.user ? true : false}
         handleModalClose={this.handleModalClose}
         handleModalOpen={this.handleModalOpen}
+        handleClickRecover={this.handleClickRecover}
+        handleClickNew={this.handleClickNew}
+      />
+    <Recover
+        open={this.state.openRecover}
+        email={this.state.email}
+        handleChange={this.handleChange}
+        loggedIn={ this.props.user ? true : false}
+        handleRecoverClose={this.handleRecoverClose}
+        handleClickLogin={this.handleClickLogin}
+        handleClickNew={this.handleClickNew}
+        RecoverClose={this.RecoverClose}
+      />
+    <New
+        open={this.state.openNew}
+        email={this.state.email}
+        password={this.state.password}
+        confirmation={this.state.confirmation}
+        handleChange={this.handleChange}
+        handleClickLogin={this.handleClickLogin}
+        handleClickRecover={this.handleClickRecover}
+        handleNewClose={this.handleNewClose}
+        NewClose={this.NewClose}
       />
       <br/>
       </div>

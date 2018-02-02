@@ -7,6 +7,8 @@ import Typography from 'material-ui/Typography';
 import AccountBoxIcon from 'material-ui-icons/AccountBox';
 import Modal from 'material-ui/Modal';
 import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import Button from 'material-ui/Button'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { grey } from 'material-ui/colors';
@@ -20,14 +22,34 @@ import {tiendappSelector} from '../selectors/tiendapp';
 
 const styles = theme => ({
   modalContent: {
-    position: 'absolute',
     backgroundColor: 'white',
     boxShadow: 'none',
     padding: theme.spacing.unit * 4,
     margin: theme.spacing.unit,
     display: 'flex',
     flexWrap: 'wrap',
-    transform: `translate(50%, 50%)`,
+    [theme.breakpoints.up('md')]: {
+      position: 'absolute',
+      backgroundColor: 'white',
+      boxShadow: 'none',
+      padding: theme.spacing.unit * 4,
+      margin: theme.spacing.unit,
+      display: 'flex',
+      flexWrap: 'wrap',
+      transform: `translate(40%, 40%)`,
+      width: '60%'
+    },
+  },
+  closeButton: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+  title: {
+    color: 'rgba(0,0,0,0.54)',
+    display: 'flex',
+    marginTop: 10,
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -41,6 +63,10 @@ const styles = theme => ({
     width: '100%',
     backgroundColor: 'rgba(254, 0, 0, 0.7)',
     color: 'white',
+  },
+  buttonPassword: {
+    marginTop: theme.spacing.unit,
+    color: 'rgba(0,0,0,0.54)',
   },
 });
 
@@ -67,7 +93,17 @@ class Login extends React.Component {
   };
 
   render() {
-    const { open, email, password, loggedIn, classes, handleChange, handleModalClose } = this.props
+    const {
+      open,
+      email,
+      password,
+      loggedIn,
+      classes,
+      handleChange,
+      handleModalClose,
+      handleClickRecover,
+      handleClickNew,
+    } = this.props
 
     if (loggedIn){
       return (
@@ -82,7 +118,7 @@ class Login extends React.Component {
           </ListItem>
         </Link>
       );
-    } else{
+    } else {
       return (
         <MuiThemeProvider theme={theme}>
           <a to='#' onClick={this.handleModalClick}  style={{textDecoration: 'none'}}>
@@ -103,7 +139,10 @@ class Login extends React.Component {
             disableAutoFocus
           >
             <div className={classes.modalContent}>
-              <Typography type="title" id="modal-title">
+              <IconButton onClick={handleModalClose()} className={classes.closeButton}>
+                <CloseIcon />
+              </IconButton>
+              <Typography type="title" id="modal-title" className={classes.title}>
                 Ingresa tus datos
               </Typography>
               <TextField
@@ -123,8 +162,14 @@ class Login extends React.Component {
                 type='password'
                 margin='normal'
               />
-            <Button raised className={classes.button} onClick={this.handleButtonClick}>
+              <Button raised className={classes.button} onClick={this.handleButtonClick}>
                 Ingresar
+              </Button>
+              <Button className={classes.buttonPassword} onClick={handleClickRecover}>
+                Recuperar contraseña
+              </Button>
+              <Button className={classes.buttonPassword} onClick={handleClickNew}>
+                Crear una cuenta
               </Button>
             </div>
           </Modal>
@@ -144,6 +189,8 @@ Login.propTypes = {
   handleModalClose: PropTypes.func,
   loginUser: PropTypes.func,
   tiendapp: PropTypes.object,
+  handleClickRecover: PropTypes.func,
+  handleClickNew: PropTypes.func,
 };
 
 

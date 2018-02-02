@@ -23,10 +23,10 @@ function Message(props) {
     <div>
       <Paper className={classes.root} elevation={4}>
         <Typography type="display3" component="h2" className={classes.typography}>
-          404: Page not found.
+          404: Página no encontrada
         </Typography>
         <Typography type="display1" className={classes.typography}>
-          Try clicking on the menu to the left.
+          Haz click en Catálogo o Inicio para ver productos.
         </Typography>
       </Paper>
     </div>
