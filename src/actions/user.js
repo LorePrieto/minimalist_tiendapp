@@ -1,4 +1,4 @@
-import { loadCartItems } from './cart.js';
+import { loadCartItems, removeAllItemsFromCart } from './cart.js';
 import { loadOrders, removeAllOrders } from './orders.js';
 
 export const ADD_USER = 'ADD_USER';
@@ -55,8 +55,10 @@ export const loginUser = (email, password) => {
 
 export const logoutUser = () => {
   return function (dispatch) {
-    return (dispatch(removeUser()),
-      dispatch(removeAllOrders())
+    return (
+      dispatch(removeUser()),
+      dispatch(removeAllOrders()),
+      dispatch(removeAllItemsFromCart())
     )
   };
 };
