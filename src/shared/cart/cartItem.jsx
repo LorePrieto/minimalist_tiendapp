@@ -112,7 +112,7 @@ class CartItem extends React.Component {
                   <div className={classes.details}>
                     <CardMedia
                       className={classes.cover}
-                      image={cartItem.img}
+                      image={product.image}
                       title={cartItem.name + ' ' + cartItem.variant}
                     />
                     <CardContent>
