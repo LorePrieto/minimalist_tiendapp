@@ -24,6 +24,7 @@ import Login from './Login';
 
 // Redux
 import {connect} from 'react-redux';
+import { updateAllCart } from '../actions/initial.js';
 import {cartSelector, getSubtotal} from '../selectors/cart.js';
 import { userSelector } from '../selectors/user.js';
 
@@ -153,6 +154,11 @@ class Layout extends React.Component {
     this.handleModalClose = this.handleModalClose.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount = () => {
+    if (this.props.user)
+      this.props.updateAllCart(this.props.user.token);
   }
 
   toggleDrawer = (side, open) => () => {
@@ -376,6 +382,7 @@ Layout.propTypes = {
   subtotal: PropTypes.number,
   user: PropTypes.object,
   classes: PropTypes.object.isRequired,
+  updateAllInfo: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {
@@ -388,7 +395,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    updateAllCart: (token) => dispatch(updateAllCart(token))
   };
 }
 

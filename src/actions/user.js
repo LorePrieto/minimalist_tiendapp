@@ -3,6 +3,7 @@ import { loadOrders, removeAllOrders } from './orders.js';
 
 export const ADD_USER = 'ADD_USER';
 export const REMOVE_USER = 'REMOVE_USER';
+export const UPDATE_CURRENT_ORDER = 'UPDATE_CURRENT_ORDER';
 
 export const addUser = (email, token, order_number, order_token) => {
   return {
@@ -20,12 +21,20 @@ export const removeUser = () => {
   };
 };
 
+export const updateCurrentOrder = (order_number, order_token) => {
+  return {
+    type: UPDATE_CURRENT_ORDER,
+    order_number,
+    order_token
+  }
+}
+
 export const loginUser = (email, password) => {
   return function (dispatch) {
     return fetch('http://tutienda.lvh.me:4000/api/login', {
       method: 'POST',
       headers: new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }),
       body: JSON.stringify({
         email,
@@ -49,5 +58,29 @@ export const logoutUser = () => {
     return (dispatch(removeUser()),
       dispatch(removeAllOrders())
     )
+  };
+};
+
+export const updateUserCurrentCart = (token) => {
+  return function (dispatch) {
+    return fetch('http://tutienda.lvh.me:4000/api/orders/mine', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'X-Spree-Token': token
+      })
+    })
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error)
+    )
+    .then((responseJson) => {
+      responseJson.orders.forEach(order => {
+        if (order.state === "cart"){
+          dispatch(updateCurrentOrder(order.number, order.token));
+          dispatch(loadCartItems(order.number));
+        }
+      });
+    });
   }
 }

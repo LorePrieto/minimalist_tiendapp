@@ -40,43 +40,42 @@ const orders = (state=[], action) => {
           ship_country,
           ship_phone
         } = action;
-        if (state === "complete")
-          newState.push({
-            number,
-            state,
-            completed_at,
-            payment_state,
-            shipment_state,
-            total,
-            ship_total,
-            adjustment_total,
-            item_total,
-            bill: {
-              full_name: bill_full_name,
-              address1: bill_address1,
-              address2: bill_address2,
-              city: bill_city,
-              zipcode: bill_zipcode,
-              state_name: bill_state_name,
-              company: bill_company,
-              country: bill_country,
-              phone: bill_phone
-            },
-            ship: {
-              full_name: ship_full_name,
-              address1: ship_address1,
-              address2: ship_address2,
-              city: ship_city,
-              zipcode: ship_zipcode,
-              state_name: ship_state_name,
-              company: ship_company,
-              country: ship_country,
-              phone: ship_phone
-            },
-            items: [],
-            payments: [],
-            shipments: []
-          });
+        newState.push({
+          number,
+          state,
+          completed_at,
+          payment_state,
+          shipment_state,
+          total,
+          ship_total,
+          adjustment_total,
+          item_total,
+          bill: {
+            full_name: bill_full_name,
+            address1: bill_address1,
+            address2: bill_address2,
+            city: bill_city,
+            zipcode: bill_zipcode,
+            state_name: bill_state_name,
+            company: bill_company,
+            country: bill_country,
+            phone: bill_phone
+          },
+          ship: {
+            full_name: ship_full_name,
+            address1: ship_address1,
+            address2: ship_address2,
+            city: ship_city,
+            zipcode: ship_zipcode,
+            state_name: ship_state_name,
+            company: ship_company,
+            country: ship_country,
+            phone: ship_phone
+          },
+          items: [],
+          payments: [],
+          shipments: []
+        });
         return newState;
       }
       case ADD_ITEM_TO_ORDER: {

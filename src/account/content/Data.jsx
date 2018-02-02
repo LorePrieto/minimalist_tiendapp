@@ -19,7 +19,10 @@ import LastPageIcon from 'material-ui-icons/LastPage';
 
 // Redux
 import {connect} from 'react-redux';
-import {ordersSelector} from '../../selectors/orders';
+import { updateAllOrders } from '../../actions/initial';
+import { ordersSelector } from '../../selectors/orders';
+import { userSelector } from '../../selectors/user';
+
 
 const actionsStyles = theme => ({
   root: {
@@ -131,6 +134,11 @@ class Data extends React.Component {
       page: 0,
       rowsPerPage: 5,
     };
+  };
+
+  componentDidMount = () => {
+    if (this.props.user)
+      this.props.updateAllOrders(this.props.user.token);
   }
 
   handleChangePage = (event, page) => {
@@ -236,18 +244,21 @@ class Data extends React.Component {
 
 Data.propTypes = {
   classes: PropTypes.object.isRequired,
-  orders: PropTypes.array
+  orders: PropTypes.array,
+  user: PropTypes.object,
+  updateAllOrders: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => {
   return {
     orders: ordersSelector(state),
+    user: userSelector(state),
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    updateAllOrders: (token) => dispatch(updateAllOrders(token)),
   };
 }
 

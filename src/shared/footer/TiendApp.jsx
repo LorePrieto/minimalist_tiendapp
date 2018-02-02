@@ -27,7 +27,7 @@ function TiendApp(props) {
   return (
       <Paper className={classes.paper}>
         <Typography component="p" className={classes.typography}>
-          Hecho en <strong>TiendApp</strong>&reg;
+          Hecho en <strong><a href="http://tiendapp.cl" rel="noopener noreferrer" target="_blank" style={{textDecoration: 'none', color: 'rgba(0,0,0,0.54)'}}>TiendApp</a></strong>&reg;
         </Typography>
       </Paper>
   );

@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { getAllProducts } from './actions/products.js';
 import { loadTiendapp } from './actions/tiendapp.js';
-import configureStore from './configureStore'
+import configureStore from './configureStore';
 
 const { store, persistor } = configureStore()
 store.dispatch(loadTiendapp());

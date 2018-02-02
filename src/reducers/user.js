@@ -1,6 +1,7 @@
 import {
     ADD_USER,
-    REMOVE_USER
+    REMOVE_USER,
+    UPDATE_CURRENT_ORDER,
 } from '../actions/user';
 
 const user = (state=[], action) => {
@@ -26,6 +27,17 @@ const user = (state=[], action) => {
       case REMOVE_USER: {
         newState.pop();
         return newState;
+      }
+      case UPDATE_CURRENT_ORDER: {
+        const {
+          order_number,
+          order_token
+        } = action;
+        newState.forEach(newS => {
+          newS.order_number = order_number;
+          newS.order_token = order_token; 
+        });
+        return newState
       }
       default:{
         return state;
