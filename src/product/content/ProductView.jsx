@@ -19,6 +19,7 @@ import {connect} from 'react-redux';
 import {changeStock} from '../../actions/products';
 import {addProductToCart} from '../../actions/cart';
 import {productSelector, variantsProductsSelector} from '../../selectors/products';
+import {userSelector} from '../../selectors/user';
 
 const styles = theme => ({
   root: {
@@ -116,7 +117,7 @@ class ProductView extends React.Component {
       let variant = this.props.variants.find(variant => variant.id === this.state.id);
       if (!variant)
         variant = this.props.product;
-      this.props.addProductToCart(variant.variant_id, variant.name, variant.image, variant.options_text, variant.promotion_price, parseInt(this.state.qty, 10), this.props.product.product_id);
+      this.props.addProductToCart(this.props.user.order_number, this.props.user.order_token, variant.variant_id, parseInt(this.state.qty, 10));
       this.props.changeStock(variant.variant_id, parseInt(this.state.qty, 10));
       this.setState({
           qty: '0',
@@ -254,19 +255,21 @@ ProductView.propTypes = {
   changeStock: PropTypes.func,
   classes: PropTypes.object.isRequired,
   product: PropTypes.object,
-  variants: PropTypes.array
+  variants: PropTypes.array,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = (state, props) => {
   return {
     product: productSelector(state, props.match.params.product_id),
     variants: variantsProductsSelector(state, props.match.params.product_id),
+    user: userSelector(state),
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addProductToCart: (variant_id, name, img, variant, price, quantity, product_id) => dispatch(addProductToCart(variant_id, name, img, variant, price, quantity, product_id)),
+    addProductToCart: (order_number, order_token, variant_id, quantity) => dispatch(addProductToCart(order_number, order_token, variant_id, quantity)),
     changeStock: (variant_id, quantity) => dispatch(changeStock(variant_id, quantity)),
   };
 }

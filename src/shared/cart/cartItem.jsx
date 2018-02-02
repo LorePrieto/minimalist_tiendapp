@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
@@ -16,6 +15,7 @@ import { connect } from 'react-redux';
 import { changeItemQuantity, removeItemFromCart } from '../../actions/cart';
 import { changeStock } from '../../actions/products';
 import { productsSelector } from '../../selectors/products';
+import { userSelector } from '../../selectors/user';
 
 
 const styles = theme => ({
@@ -73,7 +73,7 @@ class CartItem extends React.Component {
       });
       if (event.target.value){
         this.props.changeStock(this.props.cartItem.variant_id, (parseInt(event.target.value,10) - this.props.cartItem.quantity));
-        this.props.changeItemQuantity(this.props.cartItem.variant_id, this.props.cartItem.price, parseInt(event.target.value,10), this.props.cartItem.product_id);
+        this.props.changeItemQuantity(this.props.user.order_number, this.props.user.order_token, this.props.cartItem.line_item_id, this.props.cartItem.variant_id, parseInt(event.target.value,10));
       }
     }else if (!((product.total_on_hand + this.props.cartItem.quantity) >= event.target.value || product.is_backorderable)) {
       this.setState({
@@ -84,7 +84,7 @@ class CartItem extends React.Component {
 
   onDeleteClickHandler = () => event => {
     this.props.changeStock(this.props.cartItem.variant_id, -1*this.props.cartItem.quantity);
-    this.props.removeItemFromCart(this.props.cartItem.variant_id, this.props.cartItem.price);
+    this.props.removeItemFromCart(this.props.user.order_number, this.props.cartItem.line_item_id);
   }
 
   handleSnackBarClose = (ev, reason) => {
@@ -180,18 +180,20 @@ CartItem.propTypes = {
   cartItem: PropTypes.object,
   onLinkClick: PropTypes.func,
   products: PropTypes.array,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = (state, props) => {
   return {
-    products: productsSelector(state)
+    products: productsSelector(state),
+    user: userSelector(state),
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeItemQuantity: (variant_id, price, quantity) => dispatch(changeItemQuantity(variant_id, price, quantity)),
-    removeItemFromCart: (variant_id, price) => dispatch(removeItemFromCart(variant_id, price)),
+    changeItemQuantity: (order_number, order_token, line_item_id, variant_id, quantity) => dispatch(changeItemQuantity(order_number, order_token, line_item_id, variant_id, quantity)),
+    removeItemFromCart: (order_number, line_item_id) => dispatch(removeItemFromCart(order_number, line_item_id)),
     changeStock: (variant_id, quantity) => dispatch(changeStock(variant_id, quantity)),
   };
 }

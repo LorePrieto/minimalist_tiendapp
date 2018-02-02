@@ -8,9 +8,19 @@ const user = (state=[], action) => {
   const newState = [...state];
   switch (type) {
       case ADD_USER: {
-        const { email, cartID, token } = action;
+        const {
+          email,
+          token,
+          order_number,
+          order_token
+        } = action;
         newState.pop();
-        newState.push({email, cartID, token});
+        newState.push({
+          email,
+          token,
+          order_number,
+          order_token
+        });
         return newState;
       }
       case REMOVE_USER: {

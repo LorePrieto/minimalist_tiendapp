@@ -4,12 +4,13 @@ import { loadOrders, removeAllOrders } from './orders.js';
 export const ADD_USER = 'ADD_USER';
 export const REMOVE_USER = 'REMOVE_USER';
 
-export const addUser = (email, cartID, token) => {
+export const addUser = (email, token, order_number, order_token) => {
   return {
     type: ADD_USER,
     email,
-    cartID,
-    token
+    token,
+    order_number,
+    order_token,
   };
 };
 
@@ -36,7 +37,7 @@ export const loginUser = (email, password) => {
       error => console.log('An error occurred.', error)
     )
     .then((responseJson) => {
-      dispatch(addUser(email, responseJson.cart.id, responseJson.user.spree_api_key));
+      dispatch(addUser(email, responseJson.user.spree_api_key, responseJson.cart.number, responseJson.cart.guest_token));
       dispatch(loadCartItems(responseJson.cart.id));
       dispatch(loadOrders(responseJson.user.spree_api_key));
     });

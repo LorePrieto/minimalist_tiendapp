@@ -153,6 +153,8 @@ class Data extends React.Component {
         return 'Fallado';
       case 'pending':
         return 'Pendiente';
+      case 'invalid':
+        return 'Inválido';
       default:
         return '';
     }
@@ -220,6 +222,8 @@ class Data extends React.Component {
                   rowsPerPageOptions={[5,10,15]}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
                   Actions={TablePaginationActionsWrapped}
+                  labelDisplayedRows={({from, to, count}) => from+" - "+to+" de "+count}
+                  labelRowsPerPage={"Productos por página"}
                 />
               </TableRow>
             </TableFooter>

@@ -85,13 +85,15 @@ export const addItemToOrder = (
 export const addPaymentToOrder = (
   order_number,
   amount,
-  name
+  name,
+  state
 ) => {
   return {
       type: ADD_PAYMENT_TO_ORDER,
       order_number,
       amount,
-      name
+      name,
+      state
   };
 };
 
@@ -175,7 +177,8 @@ export const loadOrders = (token) => {
           dispatch(addPaymentToOrder(
             order.number,
             payment.amount,
-            payment.payment_method.name
+            payment.payment_method.name,
+            payment.state
           ));
         });
         order.shipments.forEach(shipment => {

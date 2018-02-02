@@ -8,7 +8,7 @@ import {
 
 const orders = (state=[], action) => {
   const { type } = action;
-  var newState = [...state];
+  let newState = [...state];
   switch (type) {
       case ADD_ORDER: {
         const {
@@ -103,13 +103,15 @@ const orders = (state=[], action) => {
         const {
           order_number,
           amount,
-          name
+          name,
+          state
         } = action;
         newState.forEach(entry => {
           if (entry.number === order_number){
             entry.payments.push({
               amount,
-              name
+              name,
+              state
             });
           }
         });

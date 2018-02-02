@@ -1,11 +1,11 @@
 export const ADD_TIENDAPP = 'ADD_TIENDAPP';
 
 export const addTiendapp = (
-  public_key,
+  public_key
 ) =>{
   return {
     type: ADD_TIENDAPP,
-    public_key,
+    public_key
   }
 }
 
@@ -17,7 +17,7 @@ export const loadTiendapp = () =>{
       response => response.json(),
       error => console.log('An error occurred.', error)
     ).then((responseJson) => {
-      dispatch(addTiendapp(responseJson.key));
+        dispatch(addTiendapp(responseJson.key));
     });
   }
 }

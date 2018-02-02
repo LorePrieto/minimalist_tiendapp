@@ -1,15 +1,23 @@
 import {
-    ADD_ITEM_TO_CART,
-    REMOVE_ITEM_FROM_CART,
-    CHANGE_ITEM_QUANTITY
+    ADD_ITEM_TO_LOCAL_CART,
+    REMOVE_ALL_ITEMS_FROM_CART,
 } from '../actions/cart';
 
 const cart = (state=[], action) => {
   const { type } = action;
-  const newState = [...state];
+  let newState = [...state];
   switch (type) {
-      case ADD_ITEM_TO_CART: {
-        const {variant_id, name, img, variant, price, quantity, product_id} = action;
+      case ADD_ITEM_TO_LOCAL_CART: {
+        const {
+          line_item_id,
+          variant_id,
+          name,
+          img,
+          variant,
+          price,
+          quantity,
+          product_id
+        } = action;
         let exists = false;
         newState.forEach(entry => {
           if (entry.variant_id === variant_id && entry.price === price){
@@ -18,26 +26,21 @@ const cart = (state=[], action) => {
           }
         });
         if (!exists){
-          newState.push({variant_id, name, img, variant, price, quantity, product_id});
+          newState.push({
+            line_item_id,
+            variant_id,
+            name,
+            img,
+            variant,
+            price,
+            quantity,
+            product_id
+          });
         }
         return newState;
       }
-      case REMOVE_ITEM_FROM_CART: {
-        const { variant_id, price } = action;
-        newState.forEach((item, index, object) => {
-          if (item.variant_id === variant_id && item.price === price){
-            object.splice(index, 1);
-          }
-        });
-        return newState;
-      }
-      case CHANGE_ITEM_QUANTITY: {
-        const {variant_id, price, quantity} = action;
-        newState.forEach(entry => {
-          if (entry.variant_id === variant_id && entry.price === price){
-            entry.quantity = quantity;
-          }
-        });
+      case REMOVE_ALL_ITEMS_FROM_CART: {
+        newState = [];
         return newState;
       }
       default:{
