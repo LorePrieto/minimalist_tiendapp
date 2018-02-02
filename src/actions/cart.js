@@ -1,6 +1,10 @@
 export const ADD_ITEM_TO_LOCAL_CART = 'ADD_ITEM_TO_LOCAL_CART';
 export const REMOVE_ALL_ITEMS_FROM_CART = 'REMOVE_ALL_ITEMS_FROM_CART';
 
+/*
+  Action to add a product to TiendApp's cart (uses API)
+  after local cart items are reloaded to match TiendApp's cart.
+*/
 export const addProductToCart = (order_number, order_token, variant_id, quantity) => {
   return function (dispatch) {
     return fetch('http://tutienda.lvh.me:4000/api/orders/'+order_number+'/line_items', {
@@ -26,6 +30,10 @@ export const addProductToCart = (order_number, order_token, variant_id, quantity
   };
 };
 
+/*
+  Action to remove a product to TiendApp's cart (uses API)
+  after local cart items are reloaded to match TiendApp's cart.
+*/
 export const removeItemFromCart = (order_number, line_item_id) => {
   return function (dispatch) {
     return fetch('http://tutienda.lvh.me:4000/api/orders/'+order_number+'/line_items/'+line_item_id, {
@@ -43,6 +51,10 @@ export const removeItemFromCart = (order_number, line_item_id) => {
   };
 };
 
+/*
+  Action to change a product quantity in TiendApp's cart (uses API)
+  after local cart items are reloaded to match TiendApp's cart.
+*/
 export const changeItemQuantity = (order_number, order_token, line_item_id, variant_id, quantity) => {
   return function (dispatch) {
     return fetch('http://tutienda.lvh.me:4000/api/orders/'+order_number+'/line_items/'+line_item_id, {
@@ -68,6 +80,9 @@ export const changeItemQuantity = (order_number, order_token, line_item_id, vari
   };
 };
 
+/*
+  Action to add a item to local cart
+*/
 export const addItemToLocalCart = (line_item_id, variant_id, name, img, variant, price, quantity, product_id) => {
   return {
     type: ADD_ITEM_TO_LOCAL_CART,
@@ -82,12 +97,18 @@ export const addItemToLocalCart = (line_item_id, variant_id, name, img, variant,
   };
 };
 
+/*
+  Action to remove all items from local cart
+*/
 export const removeAllItemsFromCart = () => {
   return {
     type: REMOVE_ALL_ITEMS_FROM_CART
   };
 };
 
+/*
+  Action to match local cart items with TiendApp's cart.
+*/
 export const loadCartItems = (order_number) => {
   return function (dispatch) {
     return fetch('http://tutienda.lvh.me:4000/api/orders/'+order_number)

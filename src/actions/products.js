@@ -1,6 +1,12 @@
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const CHANGE_STOCK = 'CHANGE_STOCK';
 
+/*
+  Action to add a local product.
+  TiendApp's variants are call products within this app.
+  Meaning that for each TiendApp's product one local product is created
+  for its master variant and other local products for each of its variants.
+*/
 export const addProduct = (
   id,
   variant_id,
@@ -42,6 +48,11 @@ export const addProduct = (
   };
 };
 
+/*
+  Action to update stock of the local product when a
+  product is added to the cart or its quantity is
+  updated in the local cart.
+*/
 export const changeStock = (variant_id, quantity) =>{
   return{
     type: CHANGE_STOCK,
@@ -50,6 +61,10 @@ export const changeStock = (variant_id, quantity) =>{
   }
 }
 
+/*
+  Action to fetch all TiendApp's products and add them
+  to local products.
+*/
 let cont = 0;
 export const getAllProducts = () => {
   return function (dispatch) {

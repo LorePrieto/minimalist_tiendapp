@@ -4,6 +4,9 @@ export const ADD_PAYMENT_TO_ORDER = 'ADD_PAYMENT_TO_ORDER';
 export const ADD_SHIPMENT_TO_ORDER = 'ADD_SHIPMENT_TO_ORDER';
 export const REMOVE_ALL_ORDERS =  'REMOVE_ALL_ORDERS';
 
+/*
+  Action to add order to local orders.
+*/
 export const addOrder = (
   number,
   state,
@@ -65,6 +68,9 @@ export const addOrder = (
   };
 };
 
+/*
+  Action to add items to an already existing local order.
+*/
 export const addItemToOrder = (
   order_number,
   variant_id,
@@ -82,6 +88,9 @@ export const addItemToOrder = (
   };
 };
 
+/*
+  Action to add payments to an already existing local order.
+*/
 export const addPaymentToOrder = (
   order_number,
   amount,
@@ -97,6 +106,9 @@ export const addPaymentToOrder = (
   };
 };
 
+/*
+  Action to add shipments to an already existing local order.
+*/
 export const addShipmentToOrder = (
   order_number,
   stock_location,
@@ -114,12 +126,18 @@ export const addShipmentToOrder = (
   };
 };
 
+/*
+  Action to remove all local orders.
+*/
 export const removeAllOrders = () => {
   return{
     type: REMOVE_ALL_ORDERS,
   };
 };
 
+/*
+  Action to match local orders to TiendApp's orders.
+*/
 export const loadOrders = (token) => {
   return function (dispatch) {
     return fetch('http://tutienda.lvh.me:4000/api/orders/mine', {

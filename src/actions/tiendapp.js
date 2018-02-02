@@ -1,5 +1,8 @@
 export const ADD_TIENDAPP = 'ADD_TIENDAPP';
 
+/*
+  Action to add information to local tiendapp.
+*/
 export const addTiendapp = (
   public_key
 ) =>{
@@ -9,6 +12,10 @@ export const addTiendapp = (
   }
 }
 
+/*
+  Action to fetch TiendApp's information about the store
+  and saving it to local tiendapp.
+*/
 export const loadTiendapp = () =>{
   return function (dispatch) {
     return fetch('http://tutienda.lvh.me:4000/api/public_key.json', {
